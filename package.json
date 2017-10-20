@@ -1,0 +1,11 @@
+{
+  "name": "pocket-node",
+  "version": "0.0.1",
+  "description": "A Pocket Network client for Pocket Nodes",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luis C. de Leon <luis@pkt.network>",
+  "license": "MIT"
+}
