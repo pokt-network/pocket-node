@@ -7,5 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Luis C. de Leon <luis@pkt.network>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.2.1"
+  },
+  "devDependencies": {
+    "eslint-config-google": "^0.9.1"
+  }
 }
