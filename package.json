@@ -12,7 +12,7 @@
     "koa": "^2.3.0",
     "koa-body": "^2.5.0",
     "koa-router": "^7.2.1",
-    "pkt-relayer-eth": "file:~/current_projects/pkt-relayer-eth"
+    "pkt-relayer-eth": "git@github.com:pkt-network/pkt-relayer-eth.git"
   },
   "devDependencies": {
     "eslint-config-google": "^0.9.1"
