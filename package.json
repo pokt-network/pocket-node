@@ -9,10 +9,12 @@
   "author": "Luis C. de Leon <luis@pkt.network>",
   "license": "MIT",
   "dependencies": {
+    "ethereumjs-tx": "^1.3.3",
     "koa": "^2.3.0",
     "koa-body": "^2.5.0",
     "koa-router": "^7.2.1",
-    "pkt-relayer-eth": "git@github.com:pkt-network/pkt-relayer-eth.git"
+    "pkt-relayer-eth": "git@github.com:pkt-network/pkt-relayer-eth.git",
+    "web3": "^1.0.0-beta.24"
   },
   "devDependencies": {
     "eslint-config-google": "^0.9.1"
