@@ -20,7 +20,7 @@ module.exports = {
       transactionTemplate['nonce'] = nonce;
       var currentTx = new EthereumJsTx(transactionTemplate);
       currentTx.sign(privateKeyBuffer);
-      transactions.push(currentTx.serialize().toString('hex'));
+      transactions.push('0x' + currentTx.serialize().toString('hex'));
     }
     ctx.body = {
       transactions: transactions
