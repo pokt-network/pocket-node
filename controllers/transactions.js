@@ -9,8 +9,7 @@ module.exports = {
           to: ctx.pktNodeConfig['pkt_receiver_account'],
           value: '0x6f05b59d3b20000',
           gasLimit: '0xC350',
-          gasPrice: '0x09184e72a000',
-          nonce: nonce
+          gasPrice: '0x09184e72a000'
         },
         privateKeyBuffer = new Buffer(ctx.pktNodeConfig['pkt_sender_account_pk'], 'hex');
 
