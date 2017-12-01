@@ -5,6 +5,8 @@ const PocketNodeConfig = require('../config.json');
 module.exports.relayTransaction = async function(ctx, next) {
   var relay_params = ctx.request.body,
       RelayerClass = require('pkt-relayer-' + relay_params['token'].toLowerCase());
+
+  console.log(relay_params);
   if (RelayerClass) {
     var Relayer = new RelayerClass(relay_params['transaction']),
         transaction_hash = Relayer.relaySignedTransaction();
