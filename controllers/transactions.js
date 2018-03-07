@@ -2,7 +2,6 @@ var EthereumJsTx = require('ethereumjs-tx');
 
 module.exports = {
   index: async function(ctx, next) {
-    console.log(ctx.pktNodeConfig);
     var count = await ctx.web3.eth.getTransactionCount(ctx.pktNodeConfig['pkt_sender_account']);
     var transactions = [],
         transactionTemplate = {
