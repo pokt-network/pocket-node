@@ -1,0 +1,61 @@
+FORMAT: 1A
+
+# Pocket Node REST API Endpoint
+This is the blueprint for the Pocket Node REST API Endpoint.
+
+# Group Node
+Represents the Node information and configuration, including what networks it supports.
+
+# Node [/node]
+
++ Model (text/json)
+
+        {
+          "version": "0.0.1",
+          "networks": ["BTC", "ETH"]
+        }
+
+## Retrieve Node Information [GET]
+
++ Response 200
+
+    [Node][]
+
+# Group Relays
+A Relay is a transaction to be sent to a destination network
+
+# Relay [/relays]
+
++ Model (text/json)
+
+        {
+          "network": "BTC",
+          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX"
+        }
+
+## Submit a Relay [POST]
+
++ Request Submit Relay (text/json)
+
+        {
+          "network": "BTC",
+          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX"
+        }
+
++ Response 200 (text/json)
+
+        {
+          "network": "BTC",
+          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
+          "success": true,
+          "error": null
+        }
+
++ Response 400 (text/json)
+
+        {
+          "network": "BTC",
+          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
+          "success": false,
+          "error": "Incorrect transaction information"
+        }
