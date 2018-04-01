@@ -36,7 +36,7 @@ To remove a specific plugin just run the following command:
 ***Note***: In case you have multiple plugins with the same name, all will be removed.
 
 ## Creating your own Pocket Node Plugin
-A Pocket Node Plugin has 3 main parts: user defined configurations, plugin defined configurations and a transaction submission function.
+A Pocket Node Plugin has 4 main parts: user defined configurations, plugin defined configurations, a transaction submission function and a transaction verification function.
 
 ### Configuration
 Each individual node can have different configurations, so a plugin needs to allow them to be set programmatically, and it does so by implementing and exporting the following function:
@@ -63,7 +63,7 @@ The `plugin` object contains the plugin specific configurations and the `node` o
 ### Transaction submission
 To submit a transaction, the plugin needs to implement the following function:
 
-`function submitTransaction(serializedTransaction)`
+`function submitTransaction(serializedTx)`
 
 The return for this function is as follows:
 
@@ -73,3 +73,19 @@ The return for this function is as follows:
   metadata: {<metadata object regarding submission>}
 }
 ```
+
+### Transaction verification
+To submit a verification, the plugin needs to implement the following function:
+
+`function verifyTransaction(txHash)`
+
+The return for this function is as follows:
+
+```
+{
+  tx_verifiable: true|false,
+  result: true|false|falsey
+}
+```
+
+The `tx_verifiable` will indicate wheter or not this transaction is ready for verification, until this is `true` the Node won't submit a result to the blockchain. The result can be `true|false|falsey`, where `true|false` represent if the transaction was submitted to the specified network (whether or not the transaction went through) and `falsey` is used to indicate wheter or not a decision has been reached regarding the transaction verification.
