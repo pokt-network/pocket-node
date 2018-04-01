@@ -36,5 +36,3 @@ app.use(router.allowedMethods());
 app.listen(process.env.PORT || PocketNodeConfig['port'], function(){
   console.log("Express server listening on port %d", this.address().port);
 });
-//app.listen(PocketNodeConfig['port']);
-//console.log('listening on port 3000');
