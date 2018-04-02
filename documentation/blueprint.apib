@@ -30,7 +30,8 @@ A Relay is a transaction to be sent to a destination network
 
         {
           "network": "BTC",
-          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX"
+          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
+          "sender": "ETH_ADDRESS_OF_SENDER"
         }
 
 ## Submit a Relay [POST]
@@ -39,7 +40,8 @@ A Relay is a transaction to be sent to a destination network
 
         {
           "network": "BTC",
-          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX"
+          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
+          "sender": "ETH_ADDRESS_OF_SENDER"
         }
 
 + Response 200 (text/json)
@@ -47,6 +49,7 @@ A Relay is a transaction to be sent to a destination network
         {
           "network": "BTC",
           "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
+          "sender": "ETH_ADDRESS_OF_SENDER",
           "success": true,
           "error": null
         }
@@ -56,6 +59,7 @@ A Relay is a transaction to be sent to a destination network
         {
           "network": "BTC",
           "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
+          "sender": null
           "success": false,
           "error": "Incorrect transaction information"
         }

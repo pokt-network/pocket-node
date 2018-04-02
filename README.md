@@ -79,12 +79,13 @@ To submit a transaction, the plugin needs to implement the following function:
 
 `function submitTransaction(serializedTx)`
 
-The return for this function is as follows:
+The return for this function must be a `Promise` with the following parameter in it's callback:
 
 ```
 {
   hash: 'transaction_hash',
-  metadata: {<metadata object regarding submission>}
+  metadata: {<metadata object regarding submission>},
+  error: falsey
 }
 ```
 
@@ -93,7 +94,7 @@ To submit a verification, the plugin needs to implement the following function:
 
 `function verifyTransaction(txHash)`
 
-The return for this function is as follows:
+The return for this function must be a `Promise` with the following parameter in it's callback:
 
 ```
 {
