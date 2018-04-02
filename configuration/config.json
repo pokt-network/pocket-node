@@ -1,8 +1,1 @@
-{
-  "port": 3000,
-  "pkt_sender_account": "0xfc7846d06fab273c62cda0d29eac0936a22eeca4",
-  "pkt_sender_account_pk": "9e6e2c1b5693866359b5857bb03e611188cd1b3a13c23063acea423b54535146",
-  "pkt_receiver_account": "0xc2e87d85f89117c5a5052134d2082d1145717620",
-  "pkt_node_contract_instance_address": "0xae6d8d0961d5393653ea2deb617b2317fad4ee37",
-  "pkt_token_contract": "0x37cc19b021f1cf746d15bcc6619d2fa268167b4b"
-}
+{}
