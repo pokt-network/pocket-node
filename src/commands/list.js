@@ -3,9 +3,9 @@ var pluginManager = require('../plugin-manager');
 module.exports = function(program) {
   program
     .command('list')
-    .action(function (cmd) {
+    .action(async function (cmd) {
       console.log('Listing plugins');
-      var plugins = pluginManager.listPlugins();
+      var plugins = await pluginManager.listPlugins();
       if (plugins.length === 0) {
         console.log('No plugins installed');
         return;

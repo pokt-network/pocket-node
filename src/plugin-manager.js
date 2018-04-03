@@ -42,8 +42,8 @@ module.exports.registerPlugin = function(packageName, errorCb) {
 }
 
 // Removes a plugin
-module.exports.removePlugin = function(network, errorCb) {
-  var pluginData = this.getPluginData(network);
+module.exports.removePlugin = async function(network, errorCb) {
+  var pluginData = await this.getPluginData(network);
   npm
     .uninstall(pluginData['package_name'])
     .then(function() {
@@ -54,8 +54,8 @@ module.exports.removePlugin = function(network, errorCb) {
 }
 
 // Return all plugins (with their configurations)
-module.exports.listPlugins = function() {
-  return Object.values(fileManager.getConfigFile());
+module.exports.listPlugins = async function() {
+  return Object.values(await fileManager.getConfigFile());
 }
 
 // Setup configuration object for plugin

@@ -30,7 +30,7 @@ module.exports.create = async function(ctx, next) {
   }
 
   // Submit transaction
-  const txResult = await plugin.submitTransaction(relayRequest.transaction);
+  const txResult = await plugin.submitTransaction(relayRequest.transaction, {});
 
   // Parse result
   if (!txResult.error) {
