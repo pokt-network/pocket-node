@@ -5,7 +5,6 @@ var updater = require('jsonfile-updater'),
 class ConfigFileManager {
   constructor(configFilePath) {
     this.configFilePath = path.join(process.cwd(), 'configuration/', configFilePath);
-    console.log(this.configFilePath);
   }
 
   async updateProperty(key, value) {
@@ -37,7 +36,6 @@ class ConfigFileManager {
 
   async reloadConfigFile() {
     try {
-      console.log(this.configFilePath);
       this.configFile = await fs.readJson(this.configFilePath);
     } catch (err) {
       console.log('Error reloading config file: ' + this.configFilePath);

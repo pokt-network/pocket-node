@@ -1,17 +1,22 @@
 var ConfigFileManager = require('./config-file-manager'),
-    fileManager = new ConfigFileManager('../configuration/plugins.json'),
+    fileManager = new ConfigFileManager('plugins.json'),
     npm = require('npm-programmatic');
 
 // Returns the plugin data object
-module.exports.getPluginData = function(network) {
+module.exports.getPluginData = async function(network) {
   var pluginData = fileManager.getProperty(network.toUpperCase());
   if(!pluginData) throw 'Plugin not found for network: ' + network;
   return pluginData;
 }
 
 // Returns the actual plugin module
-module.exports.getPlugin = function(network) {
-  return require(this.getPluginData(network.toUpperCase())['package_name']);
+module.exports.getPlugin = async function(network) {
+  var pluginData = await this.getPluginData(network.toUpperCase()),
+      plugin = null;
+  if (pluginData) {
+    plugin = require(pluginData['package_name']);
+  }
+  return plugin;
 }
 
 // Returns wheter or not a plugin for this network exists

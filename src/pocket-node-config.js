@@ -1,6 +1,6 @@
 var ConfigFileManager = require('./config-file-manager'),
-    fileManager = new ConfigFileManager('../configuration/config.json'),
-    validKeys = ['eth_provider_url', 'epoch_registry_api_address', 'eth_account', 'node_nonce', 'setup'];
+    fileManager = new ConfigFileManager('config.json'),
+    validKeys = ['eth_provider_url', 'epoch_registry_api_address', 'eth_account', 'node_nonce'];
 
 function isValidKey(key) {
   return validKeys.includes(key);
@@ -23,11 +23,7 @@ module.exports.getNodeNonce = function() {
   return fileManager.getProperty('node_nonce') || null;
 }
 
-module.exports.isSetup = function() {
-  return fileManager.getProperty('setup') ? true : false;
-}
-
-module.exports.updateConfig = function(key, value) {
+module.exports.updateConfig = async function(key, value) {
   if(!isValidKey(key)) throw 'Invalid config key';
-  fileManager.updateProperty(key, value);
+  await fileManager.updateProperty(key, value);
 }
