@@ -6,6 +6,11 @@ You can install using `npm`:
 
 `npm install -g pocket-node`
 
+## Node setup
+The first thing you need to do is configure your Node, by using the following command:
+
+`pocket-node setup`
+
 ## Running the server
 To start the server, just run:
 

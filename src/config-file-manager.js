@@ -15,12 +15,12 @@ class ConfigFileManager {
   }
 
   getProperty(key) {
-    reloadConfigFile();
+    this.reloadConfigFile();
     return this.configFile[key];
   }
 
   propertyExists(key) {
-    reloadConfigFile();
+    this.reloadConfigFile();
     return this.configFile[key] ? true : false;
   }
 
