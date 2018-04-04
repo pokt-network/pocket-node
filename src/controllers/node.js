@@ -4,7 +4,7 @@ var PluginManager = require('../plugin-manager'),
 module.exports.index = async function(ctx, next) {
   ctx.body = {
     version: packageData.version,
-    networks: PluginManager.getSupportedNetworks()
+    networks: await PluginManager.getSupportedNetworks()
   };
   await next();
 };

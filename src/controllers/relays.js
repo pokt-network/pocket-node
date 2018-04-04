@@ -1,6 +1,7 @@
 var PocketNodeConfig = require('../pocket-node-config'),
-    EpochRegistryAPI = require('../contracts/epoch-registry-api'),
-    PluginManager = require('../plugin-manager');
+    getEpochRegistryAPI = require('../contracts/epoch-registry-api'),
+    PluginManager = require('../plugin-manager'),
+    epochRegistry = null;
 
 function defaultCreateResponse(relayRequest) {
   return {
@@ -12,11 +13,11 @@ function defaultCreateResponse(relayRequest) {
   }
 }
 
-// TODO implement this
 module.exports.create = async function(ctx, next) {
   // Get request
   var relayRequest = ctx.request.body,
-      plugin = await PluginManager.getPlugin(relayRequest.network.toUpperCase());
+      plugin = await PluginManager.getPlugin(relayRequest.network.toUpperCase()),
+      pluginData = await PluginManager.getPluginData(relayRequest.network.toUpperCase());
 
   // Set default response
   ctx.body = defaultCreateResponse(relayRequest);
@@ -30,13 +31,15 @@ module.exports.create = async function(ctx, next) {
   }
 
   // Submit transaction
-  const txResult = await plugin.submitTransaction(relayRequest.transaction, {});
+  const txResult = await plugin.submitTransaction(relayRequest.transaction, pluginData['configuration'] || {});
 
   // Parse result
   if (!txResult.error) {
     // Record relay
     try {
-      await EpochRegistryAPI.addRelayToCurrentEpoch(relayRequest.network.toUpperCase(), txResult.hash, relayRequest.sender, PocketNodeConfig.getNodeNonce());
+      var epochRegistry = epochRegistry ? epochRegistry : await getEpochRegistryAPI(),
+          nodeNonce = await PocketNodeConfig.getNodeNonce();
+      await epochRegistry.addRelayToCurrentEpoch(relayRequest.network.toUpperCase(), txResult.hash, relayRequest.sender, nodeNonce, {gas: 1000000});
     } catch(error) {
       console.error("Error recording relay into the blockchain: " + error);
     }
