@@ -3,6 +3,7 @@ const Router = require('koa-router');
 const KoaBody = require('koa-body');
 const NodeController = require('./controllers/node');
 const RelaysController = require('./controllers/relays');
+const KoaLogger = require('koa-logger');
 
 class PocketNodeServer {
   constructor(port) {
@@ -19,6 +20,7 @@ class PocketNodeServer {
     this.setupControllers();
     this.webServer.use(this.webRouter.routes());
     this.webServer.use(this.webRouter.allowedMethods());
+    this.webServer.use(KoaLogger());
 
     // Start the webserver
     this.webServer.listen(port, function(){
