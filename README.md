@@ -18,7 +18,7 @@ For an example of how to configure your node in the Rinkeby Testnet, you can use
 
 * `Ethereum Node` You can use a GETH instance you're running locally (http://localhost:8545).
 * `Ethereum Network ID` For Rinkeby you must use **4**
-* `EpochRegistryAPI address` The address of the contract which records the transactions your node will relay into the blockchain. For Rinkeby this address is:
+* `EpochRegistryAPI address` The address of the contract which records the transactions your node will relay into the blockchain. For Rinkeby this address is: `0x4cdaf013049eebf5891b389b0fc638386253d9aa`
 * `Ethereum account address` The Ethereum account you used to register your node in the previous step.
 * `Node Nonce` The Nonce for your Node, you can get it from [https://dashboard.pokt.network](https://dashboard.pokt.network)
 
