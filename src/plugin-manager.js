@@ -59,8 +59,8 @@ module.exports.listPlugins = async function() {
 }
 
 // Setup configuration object for plugin
-module.exports.configurePlugin = function(network, configuration) {
-  var pluginData = this.getPluginData(network);
+module.exports.configurePlugin = async function(network, configuration) {
+  var pluginData = await this.getPluginData(network);
 
   // Avoid plugin definition overwrites
   delete configuration['network'];
@@ -73,10 +73,10 @@ module.exports.configurePlugin = function(network, configuration) {
   console.log('Configuration set for plugin: ' + pluginData['package_name'] + ' with network: ' + pluginData['network']);
 }
 
-module.exports.getSupportedNetworks = function() {
-  return Object.keys(fileManager.getConfigFile());
+module.exports.getSupportedNetworks = async function() {
+  return Object.keys(await fileManager.getConfigFile());
 }
 
-module.exports.isNetworkSupported = function(network) {
-  return Object.keys(fileManager.getConfigFile()).includes(network.toUpperCase());
+module.exports.isNetworkSupported = async function(network) {
+  return Object.keys(await fileManager.getConfigFile()).includes(network.toUpperCase());
 }
