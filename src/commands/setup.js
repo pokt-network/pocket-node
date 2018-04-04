@@ -11,7 +11,12 @@ const setupQuestions = [
   {
     type: 'input',
     name: 'eth_provider_url',
-    message: "What's the URL of your Eth Node?"
+    message: "What's the URL of your Ethereum Node?"
+  },
+  {
+    type: 'input',
+    name: 'eth_network_id',
+    message: "What's the Ethereum Network ID you're connecting to?"
   },
   {
     type: 'input',
@@ -44,7 +49,7 @@ module.exports = function(program) {
           // Register config
           var answerKeys = Object.keys(answers);
           for (var i = 0; i < answerKeys.length; i++) {
-            PocketNodeConfig.updateConfig(answerKeys[i], answers[answerKeys[i]]);
+            await PocketNodeConfig.updateConfig(answerKeys[i], answers[answerKeys[i]]);
           }
           console.log('Pocket Node Setup Complete');
           console.log(JSON.stringify(answers, null, '  '));
