@@ -23,8 +23,19 @@
     "koa-body": "^2.5.0",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
+    "npm": "^5.8.0",
     "npm-programmatic": "0.0.10",
     "truffle-contract": "^3.0.4",
     "web3": "^0.20.6"
-  }
+  },
+  "keywords": [
+    "pokt",
+    "pocket",
+    "node",
+    "relay",
+    "ethereum",
+    "blockchain",
+    "infrastructure",
+    "bitcoin"
+  ]
 }
