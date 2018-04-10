@@ -1,4 +1,6 @@
-#!/usr/bin/env node#!/usr/
+#!/bin/sh
+':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+
 var program = require('commander'),
     packageData = require('../package.json'),
     commands = require('./commands'),
