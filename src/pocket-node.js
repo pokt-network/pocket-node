@@ -1,5 +1,5 @@
 #!/bin/sh
-':' //; exec "$(command -v nodejs || command -v node)" "$0" "$@"
+':' //; exec "$(command -v nodejs --use-strict || command -v node --use-strict)" "$0" "$@"
 
 var program = require('commander'),
     packageData = require('../package.json'),

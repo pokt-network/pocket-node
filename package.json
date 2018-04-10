@@ -1,6 +1,6 @@
 {
   "name": "pocket-node",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Pocket Network client for Pocket Nodes",
   "main": "src/pocket-node.js",
   "repository": "https://github.com/pokt-network/pocket-node",
