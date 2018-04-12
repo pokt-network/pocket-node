@@ -1,6 +1,7 @@
 var ConfigFileManager = require('./config-file-manager'),
     fileManager = new ConfigFileManager('plugins.json'),
-    npm = require('npm-programmatic');
+    npm = require('npm-programmatic'),
+    path = require('path');
 
 // Returns the plugin data object
 module.exports.getPluginData = async function(network) {
@@ -28,8 +29,8 @@ module.exports.pluginInstalled = function(network) {
 module.exports.registerPlugin = function(packageName, errorCb) {
   npm
     .install(packageName, {
-      cwd:'.',
-      save:true
+      cwd: path.join(process.cwd()),
+      save: true
     })
     .then(function() {
       var plugin = require(packageName),
@@ -45,7 +46,10 @@ module.exports.registerPlugin = function(packageName, errorCb) {
 module.exports.removePlugin = async function(network, errorCb) {
   var pluginData = await this.getPluginData(network);
   npm
-    .uninstall(pluginData['package_name'])
+    .uninstall(pluginData['package_name'], {
+      cwd: path.join(process.cwd()),
+      save: true
+    })
     .then(function() {
       fileManager.deleteProperty(pluginData['network']);
       console.log(pluginData['package_name'] + ' plugin deleted succesfully');
