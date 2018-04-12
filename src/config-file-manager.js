@@ -1,10 +1,11 @@
 var updater = require('jsonfile-updater'),
     fs = require('fs-extra'),
-    path = require('path');
+    path = require('path'),
+    appRootPath = require('app-root-path').toString();
 
 class ConfigFileManager {
   constructor(configFilePath) {
-    this.configFilePath = path.join(process.cwd(), 'configuration/', configFilePath);
+    this.configFilePath = path.join(appRootPath, 'configuration/', configFilePath);
   }
 
   async updateProperty(key, value) {

@@ -1,6 +1,6 @@
 {
   "name": "pocket-node",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Pocket Network client for Pocket Nodes",
   "main": "src/pocket-node.js",
   "repository": "https://github.com/pokt-network/pocket-node",
@@ -13,6 +13,7 @@
   "author": "Luis C. de Leon <luis@pokt.network>",
   "license": "MIT",
   "dependencies": {
+    "app-root-path": "^2.0.1",
     "commander": "^2.15.1",
     "crypto-js": "^3.1.9-1",
     "ethereumjs-tx": "^1.3.4",
@@ -25,6 +26,7 @@
     "koa-router": "^7.4.0",
     "npm": "^5.8.0",
     "npm-programmatic": "0.0.10",
+    "pnp-eth": "0.0.3",
     "truffle-contract": "^3.0.4",
     "web3": "^0.20.6"
   },
