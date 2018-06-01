@@ -21,45 +21,57 @@ Represents the Node information and configuration, including what networks it su
 
     [Node][]
 
-# Group Relays
-A Relay is a transaction to be sent to a destination network
+# Group Queries
+A query is a transaction to read data from the specified network.
+The `result` attribute in the response can be either an `Object`, an `Array`, a `String` or a `Number`.
 
-# Relay [/relays]
+# Queries [/queries]
 
-+ Model (text/json)
+## Submit a Query [POST]
 
-        {
-          "network": "BTC",
-          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
-          "sender": "ETH_ADDRESS_OF_SENDER"
-        }
-
-## Submit a Relay [POST]
-
-+ Request Submit Relay (text/json)
++ Request  (text/json)
 
         {
-          "network": "BTC",
-          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
-          "sender": "ETH_ADDRESS_OF_SENDER"
+          "network": "ETH",
+          "query": {},
+          "decoder": {}
         }
 
 + Response 200 (text/json)
 
         {
-          "network": "BTC",
-          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
-          "sender": "ETH_ADDRESS_OF_SENDER",
-          "success": true,
-          "error": null
+          "network": "ETH",
+          "query": {},
+          "decoder": {},
+          "result": "{Object containing result}|[Array containing multiple results]|'String value'|Numeric Value",
+          "decoded": false,
+          "error": false,
+          "error_msg": null
         }
 
-+ Response 400 (text/json)
+# Group Transactions
+A transaction is an operation that alters the state of the network.
+
+# Transactions [/transactions]
+
+## Submit a Transaction [POST]
+
++ Request  (text/json)
 
         {
-          "network": "BTC",
-          "transaction": "SERIALIZED_SIGNED_TRANSACTION_HEX",
-          "sender": null
-          "success": false,
-          "error": "Incorrect transaction information"
+          "network": "ETH",
+          "serialized_tx": "0x000",
+          "tx_metadata": {}
+        }
+
++ Response 200 (text/json)
+
+        {
+          "network": "ETH",
+          "serialized_tx": "0x000",
+          "tx_metadata": {},
+          "hash": "0x000",
+          "metadata": {},
+          "error": false,
+          "error_msg": null
         }

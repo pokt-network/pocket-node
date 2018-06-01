@@ -2,7 +2,8 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const KoaBody = require('koa-body');
 const NodeController = require('./controllers/node');
-const RelaysController = require('./controllers/relays');
+const QueriesController = require('./controllers/queries');
+const TransactionsController = require('./controllers/transactions');
 const KoaLogger = require('koa-logger');
 
 class PocketNodeServer {
@@ -32,8 +33,11 @@ class PocketNodeServer {
     // Setup the /node route
     this.webRouter.get('/node', NodeController.index);
 
-    // Setup the /relays route
-    this.webRouter.post('/relays', RelaysController.create);
+    // Setup the /queries route
+    this.webRouter.post('/queries', QueriesController.submit);
+
+    // Setup the /transactions route
+    this.webRouter.post('/transactions', TransactionsController.submit);
   }
 }
 
