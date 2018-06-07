@@ -58,6 +58,13 @@ Each Plugin requires a configuration file which is a JSON object with all the pr
 ## Removing a Pocket Node Plugin
 To remove a specific plugin just run the following command:
 
-`pocket-node remove <network token ID (ETH, BTC, etc.)>`
+`pocket-node remove -n <network token ID (ETH, BTC, etc.)>`
 
-***Note***: In case you have multiple plugins with the same name, all will be removed.
+You can also remove all installed plugins with the following command:
+
+`pocket-node remove -a`
+
+***Notes***:
+
+1. In case you have multiple plugins with the same network, all will be removed.
+2. If you remove a plugin, your configuration for that plugin will be removed as well, as such you will have to reconfigure the plugin if you decide to re-install it.
