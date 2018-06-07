@@ -6,7 +6,7 @@ var ConfigFileManager = require('./config-file-manager'),
 
 // Returns the plugin data object
 module.exports.getPluginData = async function(network) {
-  var pluginData = fileManager.getProperty(network.toUpperCase());
+  var pluginData = await fileManager.getProperty(network.toUpperCase());
   if(!pluginData) throw 'Plugin not found for network: ' + network;
   return pluginData;
 }
@@ -31,7 +31,7 @@ module.exports.registerPlugin = function(packageName, errorCb) {
   npm
     .install(packageName, {
       cwd: path.join(appRootPath),
-      save: true
+      save: false
     })
     .then(function() {
       var plugin = require(packageName),
@@ -49,7 +49,7 @@ module.exports.removePlugin = async function(network, errorCb) {
   npm
     .uninstall(pluginData['package_name'], {
       cwd: path.join(appRootPath),
-      save: true
+      save: false
     })
     .then(function() {
       fileManager.deleteProperty(pluginData['network']);
