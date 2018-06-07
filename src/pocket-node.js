@@ -24,8 +24,5 @@ commands.configure(program);
 // Setup 'remove' command
 commands.remove(program);
 
-// Setup 'setup' command
-commands.setup(program);
-
 // Parse inputs
 program.parse(process.argv);
