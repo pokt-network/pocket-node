@@ -6,7 +6,7 @@ var ConfigFileManager = require('./config-file-manager'),
 
 // Returns the plugin data object
 module.exports.getPluginData = async function(network) {
-  var pluginData = fileManager.getProperty(network.toUpperCase());
+  var pluginData = await fileManager.getProperty(network.toUpperCase());
   if(!pluginData) throw 'Plugin not found for network: ' + network;
   return pluginData;
 }
