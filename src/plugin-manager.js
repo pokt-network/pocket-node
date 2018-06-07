@@ -31,7 +31,7 @@ module.exports.registerPlugin = function(packageName, errorCb) {
   npm
     .install(packageName, {
       cwd: path.join(appRootPath),
-      save: true
+      save: false
     })
     .then(function() {
       var plugin = require(packageName),
@@ -49,7 +49,7 @@ module.exports.removePlugin = async function(network, errorCb) {
   npm
     .uninstall(pluginData['package_name'], {
       cwd: path.join(appRootPath),
-      save: true
+      save: false
     })
     .then(function() {
       fileManager.deleteProperty(pluginData['network']);
