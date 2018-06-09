@@ -1,17 +1,19 @@
-var pluginManager = require('../plugin-manager');
+var pluginManager = require('../plugin-manager'),
+    PocketNodeLogger = require('../pocket-node-logger');
 
 module.exports = function(program) {
   program
     .command('list')
     .action(async function (cmd) {
-      console.log('Listing plugins');
+      var logger = PocketNodeLogger.createCommandLogger();
+      logger.info('Listing plugins');
       var plugins = await pluginManager.listPlugins();
       if (plugins.length === 0) {
-        console.log('No plugins installed');
+        logger.info('No plugins installed');
         return;
       }
       plugins.forEach(function(pluginData) {
-        console.log('Network: ' + pluginData['network'] +
+        logger.info('Network: ' + pluginData['network'] +
                     ' Package: ' + pluginData['package_name'] +
                     ' Version: ' + pluginData['version']);
       });

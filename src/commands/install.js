@@ -1,12 +1,16 @@
-var pluginManager = require('../plugin-manager');
+var pluginManager = require('../plugin-manager'),
+    PocketNodeLogger = require('../pocket-node-logger');
 
 module.exports = function(program) {
   program
     .command('install <plugin>')
     .action(function (plugin, cmd) {
-      console.log('Installing: ' + plugin);
+      var logger = PocketNodeLogger.createCommandLogger();
+      logger.info('Installing: ' + plugin);
       pluginManager.registerPlugin(plugin, function(err) {
-        console.error(err);
+        if (err) {
+          logger.error(err);
+        }
       });
     });
 }

@@ -1,9 +1,13 @@
-var pluginManager = require('../plugin-manager');
+var pluginManager = require('../plugin-manager'),
+    PocketNodeLogger = require('../pocket-node-logger'),
+    logger = PocketNodeLogger.createCommandLogger();
 
 async function removePlugin(network) {
-  console.log('Removing ' + network + ' plugin');
+  logger.info('Removing ' + network + ' plugin');
   await pluginManager.removePlugin(network, function(err) {
-    console.error(err);
+    if (err) {
+      logger.error(err);
+    }
   });
 }
 
@@ -14,7 +18,7 @@ module.exports = function(program) {
     .option('-a, --all', 'Remove all plugins')
     .action(async function (cmd) {
       if (cmd.all) {
-        console.log('Removing all plugins from current Pocket Node installation');
+        logger.info('Removing all plugins from current Pocket Node installation');
         var pluginList = await pluginManager.listPlugins();
         for (var i = 0; i < pluginList.length; i++) {
           removePlugin(pluginList[i].network);
