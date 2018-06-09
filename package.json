@@ -22,12 +22,12 @@
     "jsonfile-updater": "^3.1.0",
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
-    "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
-    "npm": "^5.8.0",
     "npm-programmatic": "0.0.10",
     "truffle-contract": "^3.0.4",
-    "web3": "^0.20.6"
+    "web3": "^0.20.6",
+    "winston": "^3.0.0-rc6",
+    "winston-daily-rotate-file": "^3.2.1"
   },
   "keywords": [
     "pokt",
