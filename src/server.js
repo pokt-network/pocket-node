@@ -44,8 +44,7 @@ class PocketNodeServer {
 
     // Start the webserver
     this.webServer.listen(port, function(){
-      server.logger.info("Pocket Node started on port: " + this.address().port);
-      server.logger.info('Log file path: ' + server.logger.transports[1].filename);
+      server.logger.info(`Started Pocket Node Worker with PID: ${process.pid}`);
     });
   }
 
