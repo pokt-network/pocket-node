@@ -5,7 +5,8 @@ const Koa = require('koa'),
       NodeController = require('./controllers/node'),
       QueriesController = require('./controllers/queries'),
       TransactionsController = require('./controllers/transactions'),
-      PocketNodeLogger = require('./pocket-node-logger');
+      PocketNodeLogger = require('./pocket-node-logger'),
+      http = require('http');
 
 // Request middlewares
 const injectPocketNodeServer = function(server) {
@@ -23,15 +24,15 @@ class PocketNodeServer {
 
   constructor(port, logFilePath) {
     // Load web server
+    this.port = port;
+    this.logFilePath = logFilePath;
     this.logger = PocketNodeLogger.createServerLogger(logFilePath);
     this.webServer = new Koa();
     this.webRouter = new Router();
     this.webServer.use(KoaBody());
-    // Start the node
-    this.start(port);
   }
 
-  start(port) {
+  start(callback) {
     // Server reference
     var server = this;
 
@@ -43,8 +44,11 @@ class PocketNodeServer {
     this.webServer.use(logPocketNodeRequest);
 
     // Start the webserver
-    this.webServer.listen(port, function(){
-      server.logger.info(`Started Pocket Node Worker with PID: ${process.pid}`);
+    this.httpServer = http.createServer(this.webServer.callback())
+                          .listen(this.port, function(){
+      if (callback) {
+        callback();
+      }
     });
   }
 
@@ -57,6 +61,12 @@ class PocketNodeServer {
 
     // Setup the /transactions route
     this.webRouter.post('/transactions', TransactionsController.submit);
+  }
+
+  close() {
+    if (this.httpServer) {
+      this.httpServer.close();
+    }
   }
 }
 

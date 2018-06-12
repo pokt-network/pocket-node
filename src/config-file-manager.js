@@ -5,6 +5,7 @@ var updater = require('jsonfile-updater'),
 
 class ConfigFileManager {
   constructor(configFilePath) {
+    this.configFile = {};
     this.configFilePath = path.join(appRootPath, 'configuration/', configFilePath);
   }
 
@@ -39,11 +40,7 @@ class ConfigFileManager {
     try {
       // Ensure the file exists
       await fs.ensureFile(this.configFilePath);
-      this.configFile = await fs.readJson(this.configFilePath, {throws: false});
-      if (!this.configFile) {
-        await fs.outputJson(this.configFilePath, {});
-        this.configFile = {};
-      }
+      this.configFile = await fs.readJson(this.configFilePath, {throws: true});
     } catch (err) {
       console.log('Error reloading config file: ' + this.configFilePath);
       console.error(err);
