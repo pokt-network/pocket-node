@@ -24,7 +24,11 @@ module.exports = function(program) {
           removePlugin(pluginList[i].network);
         }
       } else {
-        removePlugin(cmd.network);
+        if (!cmd.network) {
+          logger.error('Network not specified, please use the -n option.');
+        } else {
+          removePlugin(cmd.network);
+        }
       }
     })
 }

@@ -22,7 +22,10 @@ module.exports = function(program) {
           logger.info(`Started new Pocket Node Worker with PID: ${newWorker.process.pid}`);
         });
       } else {
-        new PocketNodeServer(cmd.port, cmd.output);
+        var workerServer = new PocketNodeServer(cmd.port, cmd.output);
+        workerServer.start(function() {
+          logger.info(`Started new Pocket Node Worker with PID: ${process.pid}`);
+        });
       }
     });
 }

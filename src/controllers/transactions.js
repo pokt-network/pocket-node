@@ -42,6 +42,7 @@ module.exports.submit = async function(ctx, next) {
     ctx.body.hash = txResponse.hash;
     ctx.body.metadata = txResponse.metadata;
     ctx.body.error = txResponse.error;
+    ctx.body.error_msg = txResponse.errorMsg
 
     // Error out if needed
     if (txResponse.error) {

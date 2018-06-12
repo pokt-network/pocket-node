@@ -7,7 +7,7 @@ var ConfigFileManager = require('./config-file-manager'),
 // Returns the plugin data object
 module.exports.getPluginData = async function(network) {
   var pluginData = await fileManager.getProperty(network.toUpperCase());
-  if(!pluginData) throw 'Plugin not found for network: ' + network;
+  if(!pluginData) Error('Plugin not found for network: ' + network);
   return pluginData;
 }
 
@@ -27,35 +27,29 @@ module.exports.pluginInstalled = function(network) {
 }
 
 // Registers a plugin
-module.exports.registerPlugin = function(packageName, errorCb) {
-  npm
-    .install(packageName, {
-      cwd: path.join(appRootPath),
-      save: false
-    })
-    .then(function() {
-      var plugin = require(packageName),
-          pluginDefinition = plugin.getPluginDefinition();
-      pluginDefinition['configuration'] = {};
-      fileManager.updateProperty(pluginDefinition.network, pluginDefinition);
-      console.log(packageName + ' plugin installed succesfully');
-    })
-    .catch(errorCb);
+module.exports.registerPlugin = async function(packageName) {
+  await npm
+          .install(packageName, {
+            cwd: path.join(appRootPath),
+            save: false
+          });
+  var plugin = require(packageName),
+      pluginDefinition = plugin.getPluginDefinition();
+  pluginDefinition['configuration'] = {};
+  fileManager.updateProperty(pluginDefinition.network, pluginDefinition);
+  console.log(packageName + ' plugin installed succesfully');
 }
 
 // Removes a plugin
-module.exports.removePlugin = async function(network, errorCb) {
+module.exports.removePlugin = async function(network) {
   var pluginData = await this.getPluginData(network);
-  npm
-    .uninstall(pluginData['package_name'], {
-      cwd: path.join(appRootPath),
-      save: false
-    })
-    .then(function() {
-      fileManager.deleteProperty(pluginData['network']);
-      console.log(pluginData['package_name'] + ' plugin deleted succesfully');
-    })
-    .catch(errorCb);
+  await npm
+          .uninstall(pluginData['package_name'], {
+            cwd: path.join(appRootPath),
+            save: false
+          });
+  fileManager.deleteProperty(pluginData['network']);
+  console.log(pluginData['package_name'] + ' plugin deleted succesfully');
 }
 
 // Return all plugins (with their configurations)
