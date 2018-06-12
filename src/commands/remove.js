@@ -14,7 +14,8 @@ async function removePlugin(network) {
 module.exports = function(program) {
   program
     .command('remove')
-    .option('-n, --network [value]', 'The network you wish to remove')
+    .description('Removes Pocket Node Plugins')
+    .option('-n, --network [value]', 'Remove specific network plugin')
     .option('-a, --all', 'Remove all plugins')
     .action(async function (cmd) {
       if (cmd.all) {
