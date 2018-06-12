@@ -8,6 +8,7 @@ module.exports = function(program) {
   var logPathFile = null;
   program
     .command('start')
+    .description('Starts the Pocket Node API Server')
     .option('-p, --port [number]', 'Specify port [3000]', '3000')
     .option('-o, --output [filepath]', 'Specify log file path [pocket-node.log]', 'pocket-node.log')
     .action(function (cmd) {

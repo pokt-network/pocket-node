@@ -4,6 +4,7 @@ var pluginManager = require('../plugin-manager'),
 module.exports = function(program) {
   program
     .command('list')
+    .description('Lists all the installed Pocket Node Plugins')
     .action(async function (cmd) {
       var logger = PocketNodeLogger.createCommandLogger();
       logger.info('Listing plugins');

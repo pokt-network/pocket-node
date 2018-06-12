@@ -9,6 +9,12 @@ var program = require('commander'),
 // Set version
 program.version(packageData.version);
 
+// Set description
+program.description(packageData.description || 'A Pocket Network client for Pocket Nodes, which are the actors within the Pocket Network that execute the Relays.');
+
+// Remove implicit command help
+program.addImplicitHelpCommand = () => {};
+
 // Setup 'start' command
 commands.start(program);
 
