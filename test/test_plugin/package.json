@@ -1,0 +1,8 @@
+{
+  "name": "test-plugin",
+  "version": "0.0.1",
+  "description": "A test plugin for the Pocket Node app",
+  "main": "index.js",
+  "author": "Luis C. de Leon <luis@pokt.network>",
+  "license": "MIT"
+}
