@@ -26,7 +26,7 @@ The return value for this must be an object containing the following information
 ```
 
 ### Configuration object
-Every plugin will have to show their users how to configure said plugin, so they will have to define a JSON Object which users will store in a JSON file and pass said file as an argument when calling the `pocket-node configure <network token ID (ETH, BTC, etc.)> /path/to/configuration.json` command.
+Every plugin will have to show their users how to configure said plugin, so they will have to define a JSON Object which users will use in a JSON file and pass said file as an argument when calling the `pocket-node configure <network token ID (ETH, BTC, etc.)> /path/to/configuration.json` command.
 
 ### Transaction submission
 To submit a transaction, the plugin needs to implement the following function:, where the `serializedTx` is a `string` containing the serialized transaction for whichever network the plugin is submitting it to. The `txMetadata` param is an `Object` which the plugin can define to support the submission of the `serializedTx` being sent and `opts` is the configuration object defined by the plugin on it's configuration file:
