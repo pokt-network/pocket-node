@@ -15,6 +15,18 @@ To start the server, just run:
 
 But before you can start relaying transactions, read below on how to install the different plugins which will allow your Node to connect to the different blockchains (ETH, BTC, LTC, etc.).
 
+## Using Docker
+
+The `.env` file is an example set of environment variables that `docker-compose` will use by default when bringing up the container.
+
+The `pocket-node` image will be built and container may be started simply by running:
+
+    docker-compose up -d
+
+If you are iterating on the codebase and changing things, this is the best way to ensure your changes are included in the resultant docker image and spawned container:
+
+    docker-compose build pocket-node && docker-compose up -d --force-recreate pocket-node
+
 ## What is a Pocket Node Plugin?
 The Pocket Node Plugin System allows the Pocket Node app to support any decentralized network as a Relay Node in the Pocket Network.
 

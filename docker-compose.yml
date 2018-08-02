@@ -1,0 +1,16 @@
+version: '2.1'
+
+services:
+
+  pocket-node:
+    build: .
+    image: ianblenke/pocket-node
+    container_name: pocket-node
+    hostname: pocket-node
+    restart: on-failure
+    environment:
+      POCKET_NODE_SERVER_PORT: ${POCKET_NODE_SERVER_PORT}
+      POCKET_NODE_PLUGIN_ETH: ${POCKET_NODE_PLUGIN_ETH}
+      POCKET_NODE_PLUGIN_ETH_NODE: ${POCKET_NODE_PLUGIN_ETH_NODE}
+      POCKET_NODE_PLUGIN_ETH_NETWORK_ID: ${POCKET_NODE_PLUGIN_ETH_NETWORK_ID}
+ 
