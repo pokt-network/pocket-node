@@ -3,8 +3,7 @@
 
 var program = require('commander'),
     packageData = require('../package.json'),
-    commands = require('./commands'),
-    PocketNodeConfig = require('./pocket-node-config');
+    commands = require('./commands');
 
 // Set version
 program.version(packageData.version);

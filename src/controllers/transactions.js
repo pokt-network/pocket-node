@@ -1,5 +1,4 @@
-var PocketNodeConfig = require('../pocket-node-config'),
-    PluginManager = require('../plugin-manager');
+var PluginManager = require('../plugin-manager');
 
 const NETWORK_NOT_SUPPORTED_ERROR = 'Network not supported';
 
