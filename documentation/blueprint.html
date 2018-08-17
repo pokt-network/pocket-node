@@ -5,15 +5,27 @@
   "<span class="hljs-attribute">networks</span>": <span class="hljs-value">[
     <span class="hljs-string">"BTC"</span>,
     <span class="hljs-string">"ETH"</span>
-  ]
+  ]</span>,
+  "<span class="hljs-attribute">subnetworks</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">BTC</span>": <span class="hljs-value">[
+      <span class="hljs-string">"mainnet"</span>,
+      <span class="hljs-string">"testnet"</span>
+    ]</span>,
+    "<span class="hljs-attribute">ETH</span>": <span class="hljs-value">[
+      <span class="hljs-string">"1"</span>,
+      <span class="hljs-string">"4"</span>
+    ]
+  </span>}
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="queries" class="resource-group"><h2 class="group-heading">Queries <a href="#queries" class="permalink">&para;</a></h2><p>A query is a transaction to read data from the specified network.
 The <code>result</code> attribute in the response can be either an <code>Object</code>, an <code>Array</code>, a <code>String</code> or a <code>Number</code>.</p>
 <div id="queries-queries" class="resource"><h3 class="resource-heading">Queries <a href="#queries-queries" class="permalink">&nbsp;&para;</a></h3><div id="queries-queries-post" class="action post"><h4 class="action-heading"><div class="name">Submit a Query</div><a href="#queries-queries-post" class="method post">POST</a><code class="uri">/queries</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/queries</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">network</span>": <span class="hljs-value"><span class="hljs-string">"ETH"</span></span>,
+  "<span class="hljs-attribute">subnetwork</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
   "<span class="hljs-attribute">query</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">decoder</span>": <span class="hljs-value">{}
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">network</span>": <span class="hljs-value"><span class="hljs-string">"ETH"</span></span>,
+  "<span class="hljs-attribute">subnetwork</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
   "<span class="hljs-attribute">query</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">decoder</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">result</span>": <span class="hljs-value"><span class="hljs-string">"{Object containing result}|[Array containing multiple results]|'String value'|Numeric Value"</span></span>,
@@ -23,17 +35,19 @@ The <code>result</code> attribute in the response can be either an <code>Object<
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="transactions" class="resource-group"><h2 class="group-heading">Transactions <a href="#transactions" class="permalink">&para;</a></h2><p>A transaction is an operation that alters the state of the network.</p>
 <div id="transactions-transactions" class="resource"><h3 class="resource-heading">Transactions <a href="#transactions-transactions" class="permalink">&nbsp;&para;</a></h3><div id="transactions-transactions-post" class="action post"><h4 class="action-heading"><div class="name">Submit a Transaction</div><a href="#transactions-transactions-post" class="method post">POST</a><code class="uri">/transactions</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/transactions</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">network</span>": <span class="hljs-value"><span class="hljs-string">"ETH"</span></span>,
+  "<span class="hljs-attribute">subnetwork</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
   "<span class="hljs-attribute">serialized_tx</span>": <span class="hljs-value"><span class="hljs-string">"0x000"</span></span>,
   "<span class="hljs-attribute">tx_metadata</span>": <span class="hljs-value">{}
 </span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">network</span>": <span class="hljs-value"><span class="hljs-string">"ETH"</span></span>,
+  "<span class="hljs-attribute">subnetwork</span>": <span class="hljs-value"><span class="hljs-string">"4"</span></span>,
   "<span class="hljs-attribute">serialized_tx</span>": <span class="hljs-value"><span class="hljs-string">"0x000"</span></span>,
   "<span class="hljs-attribute">tx_metadata</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">hash</span>": <span class="hljs-value"><span class="hljs-string">"0x000"</span></span>,
   "<span class="hljs-attribute">metadata</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">error</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
   "<span class="hljs-attribute">error_msg</span>": <span class="hljs-value"><span class="hljs-literal">null</span>
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 01 Jun 2018</p><script>/* eslint-env browser */
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 17 Aug 2018</p><script>/* eslint-env browser */
 /* eslint quotes: [2, "single"] */
 'use strict';
 
