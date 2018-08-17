@@ -12,7 +12,11 @@ Represents the Node information and configuration, including what networks it su
 
         {
           "version": "0.0.1",
-          "networks": ["BTC", "ETH"]
+          "networks": ["BTC", "ETH"],
+          "subnetworks": {
+            "BTC": ["mainnet", "testnet"],
+            "ETH": ["1", "4"]
+          }
         }
 
 ## Retrieve Node Information [GET]
@@ -33,6 +37,7 @@ The `result` attribute in the response can be either an `Object`, an `Array`, a 
 
         {
           "network": "ETH",
+          "subnetwork": "4",
           "query": {},
           "decoder": {}
         }
@@ -41,6 +46,7 @@ The `result` attribute in the response can be either an `Object`, an `Array`, a 
 
         {
           "network": "ETH",
+          "subnetwork": "4",
           "query": {},
           "decoder": {},
           "result": "{Object containing result}|[Array containing multiple results]|'String value'|Numeric Value",
@@ -60,6 +66,7 @@ A transaction is an operation that alters the state of the network.
 
         {
           "network": "ETH",
+          "subnetwork": "4",
           "serialized_tx": "0x000",
           "tx_metadata": {}
         }
@@ -68,6 +75,7 @@ A transaction is an operation that alters the state of the network.
 
         {
           "network": "ETH",
+          "subnetwork": "4",
           "serialized_tx": "0x000",
           "tx_metadata": {},
           "hash": "0x000",
