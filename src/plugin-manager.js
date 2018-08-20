@@ -57,6 +57,30 @@ module.exports.listPlugins = async function() {
   return Object.values(await fileManager.getConfigFile());
 }
 
+function isObject(obj) {
+  return Object.prototype.toString.call(obj) === '[object Object]';
+}
+
+function parsePluginConfiguration(configuration) {
+  var result = {};
+
+  if !isObject(configuration) {
+    throw "Invalid configuration, must be an Object";
+  }
+
+  const subnetworks = Object.keys(configuration);
+
+  for (var i = 0; i < subnetworks.length; i++) {
+    const subnetworkId = subnetworks[i];
+    if !isObject(configuration[subnetworkId]) {
+      throw "Invalid subnetwork configuration, must be an Object";
+    }
+    result[subnetworkId.toString()] = configuration[subnetworkId];
+  }
+
+  return result;
+}
+
 // Setup configuration object for plugin
 module.exports.configurePlugin = async function(network, configuration) {
   var pluginData = await this.getPluginData(network);
@@ -67,7 +91,7 @@ module.exports.configurePlugin = async function(network, configuration) {
   delete configuration['package_name'];
 
   // Update configuration
-  pluginData['configuration'] = configuration;
+  pluginData['configuration'] = parsePluginConfiguration(configuration);
   fileManager.updateProperty(network, pluginData);
   console.log('Configuration set for plugin: ' + pluginData['package_name'] + ' with network: ' + pluginData['network']);
 }
