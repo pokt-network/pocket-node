@@ -1,10 +1,12 @@
 var PluginManager = require('../plugin-manager');
 
 const NETWORK_NOT_SUPPORTED_ERROR = 'Network not supported';
+const SUB_NETWORK_NOT_SUPPORTED_ERROR = 'Subnetwork not supported';
 
 function defaultCreateResponse(txRequest) {
   return {
     network: txRequest.network,
+    subnetwork: txRequest.subnetwork,
     serialized_tx: txRequest.serialized_tx,
     tx_metadata: txRequest.tx_metadata,
     hash: null,
@@ -24,29 +26,39 @@ module.exports.submit = async function(ctx, next) {
   // Get request
   var txRequest = ctx.request.body,
       txNetwork = txRequest.network.toUpperCase(),
+      txSubNetwork = txRequest.subnetwork.toString(),
       plugin = await PluginManager.getPlugin(txNetwork),
-      pluginData = await PluginManager.getPluginData(txNetwork);
+      pluginData = await PluginManager.getPluginData(txNetwork),
+      pluginSubnetworkConfiguration = pluginData.configuration[txSubNetwork];
 
   // Set default response
   ctx.body = defaultCreateResponse(txRequest);
 
-  // Check if plugin is available
+  // Plugin and configuration checks
   if (!plugin) {
     setErrorResponse(ctx, 500, NETWORK_NOT_SUPPORTED_ERROR);
-  } else {
-    // Submit transaction
-    const txResponse = await plugin.submitTransaction(txRequest.serialized_tx, txRequest.tx_metadata, pluginData['configuration'] || {});
+    await next();
+    return
+  }
 
-    // Parse result
-    ctx.body.hash = txResponse.hash;
-    ctx.body.metadata = txResponse.metadata;
-    ctx.body.error = txResponse.error;
-    ctx.body.error_msg = txResponse.errorMsg
+  if (!pluginSubnetworkConfiguration) {
+    setErrorResponse(ctx, 500, SUB_NETWORK_NOT_SUPPORTED_ERROR);
+    await next();
+    return
+  }
 
-    // Error out if needed
-    if (txResponse.error) {
-      setErrorResponse(ctx, 400, txResponse.errorMsg);
-    }
+  // Submit transaction
+  const txResponse = await plugin.submitTransaction(txRequest.serialized_tx, txRequest.tx_metadata, pluginSubnetworkConfiguration);
+
+  // Parse result
+  ctx.body.hash = txResponse.hash;
+  ctx.body.metadata = txResponse.metadata;
+  ctx.body.error = txResponse.error;
+  ctx.body.error_msg = txResponse.errorMsg
+
+  // Error out if needed
+  if (txResponse.error) {
+    setErrorResponse(ctx, 400, txResponse.errorMsg);
   }
 
   await next();
