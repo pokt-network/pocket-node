@@ -26,10 +26,10 @@ module.exports.submit = async function(ctx, next) {
   // Get request
   var txRequest = ctx.request.body,
       txNetwork = txRequest.network.toUpperCase(),
-      txSubNetwork = txRequest.subnetwork.toString(),
+      txSubNetwork = (txRequest.subnetwork ? txRequest.subnetwork.toString() : null),
       plugin = await PluginManager.getPlugin(txNetwork),
       pluginData = await PluginManager.getPluginData(txNetwork),
-      pluginSubnetworkConfiguration = pluginData.configuration[txSubNetwork];
+      pluginSubnetworkConfiguration = (txSubNetwork ? pluginData.configuration[txSubNetwork] : null);
 
   // Set default response
   ctx.body = defaultCreateResponse(txRequest);

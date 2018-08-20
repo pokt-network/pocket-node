@@ -64,7 +64,7 @@ function isObject(obj) {
 function parsePluginConfiguration(configuration) {
   var result = {};
 
-  if !isObject(configuration) {
+  if (!isObject(configuration)) {
     throw "Invalid configuration, must be an Object";
   }
 
@@ -72,7 +72,7 @@ function parsePluginConfiguration(configuration) {
 
   for (var i = 0; i < subnetworks.length; i++) {
     const subnetworkId = subnetworks[i];
-    if !isObject(configuration[subnetworkId]) {
+    if (!isObject(configuration[subnetworkId]) && subnetworkId !== null && subnetworkId !== undefined) {
       throw "Invalid subnetwork configuration, must be an Object";
     }
     result[subnetworkId.toString()] = configuration[subnetworkId];
