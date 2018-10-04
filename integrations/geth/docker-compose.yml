@@ -1,0 +1,31 @@
+version: '2'
+
+volumes:
+  geth_rinkeby: {}
+
+# GETH should be configurable via ENV variables
+services:
+  geth:
+    image: aqt01/geth-rinkeby-docker
+    container_name: geth 
+    volumes:
+      - geth_rinkeby:/.rinkeby
+    restart: on-failure
+    expose:
+      - 8545
+      - 8546
+  
+  pocket-node:
+    build: ../../.
+    image: poktnetwork/pocket-node
+    container_name: pocket-node
+    restart: on-failure
+    expose:
+      - 8000
+    depends_on:
+      - geth
+    environment:
+      POCKET_NODE_PLUGIN_ETH: ${POCKET_NODE_PLUGIN_ETH}
+      POCKET_NODE_PLUGIN_ETH_NODE: ${POCKET_NODE_PLUGIN_ETH_NODE}
+      POCKET_NODE_PLUGIN_ETH_NETWORK_ID: ${POCKET_NODE_PLUGIN_ETH_NETWORK_ID}
+ 
