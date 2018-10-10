@@ -1,6 +1,6 @@
 {
   "name": "pocket-node",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A Pocket Network client for Pocket Nodes, which are the actors within the Pocket Network that execute the Relays.",
   "main": "src/pocket-node.js",
   "repository": "https://github.com/pokt-network/pocket-node",
@@ -13,6 +13,7 @@
   "author": "Luis C. de Leon <luis@pokt.network>",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^2.2.2",
     "app-root-path": "^2.0.1",
     "commander": "^2.15.1",
     "fs-extra": "^5.0.0",
@@ -21,6 +22,7 @@
     "koa-body": "^2.5.0",
     "koa-router": "^7.4.0",
     "npm-programmatic": "0.0.10",
+    "pnp-eth": "0.0.7",
     "winston": "^3.0.0-rc6",
     "winston-daily-rotate-file": "^3.2.1"
   },
