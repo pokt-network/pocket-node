@@ -27,6 +27,13 @@ If you are iterating on the codebase and changing things, this is the best way t
 
     docker-compose build pocket-node && docker-compose up -d --force-recreate pocket-node
 
+If you want to run the geth integration with pocket just do:
+
+```bash
+cd integrations/geth
+docker-compose build && docker-compose up
+```
+
 ## What is a Pocket Node Plugin?
 The Pocket Node Plugin System allows the Pocket Node app to support any decentralized network as a Relay Node in the Pocket Network.
 
