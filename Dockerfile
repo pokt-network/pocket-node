@@ -1,5 +1,7 @@
+# Note: This Dockerfile only serves as a base for custom Pocket Nodes with specific network config (e.g. Eth, BTC, etc...)
+
 FROM node:10-alpine
-MAINTAINER Lowell Abbott <lowell.abbbott@gmail.com>
+MAINTAINER Lowell Abbott <lowell@pokt.network>
 
 # Install additional system dependencies
 RUN apk --no-cache --virtual add git python bash su-exec make gcc g++ 
@@ -28,12 +30,3 @@ ENV POCKET_NODE_CONFIGURATION_DIR=${POCKET_NODE_HOME}/configuration
 
 RUN mkdir -p ${POCKET_NODE_CONFIGURATION_DIR}
 RUN echo '{}' > ${POCKET_NODE_CONFIGURATION_DIR}/plugins.json
-
-# Install the ETH plugin
-RUN pocket-node install pnp-eth
-
-COPY ./entrypoint.sh .
-
-ENTRYPOINT ["./entrypoint.sh"]
-
-CMD ["pocket-node", "start", "-p", "8000", "-o", "/dev/stdout"]
