@@ -1,17 +1,12 @@
+# Note: This docker-compose only serves as a base for custom Pocket Nodes with specific network config (e.g. Eth, BTC, etc...)
 version: '2.1'
 
 services:
 
   pocket-node:
     build: .
-    image: poktnetwork/pocket-node
+    image: poktnetwork/pocket-node:latest
     container_name: pocket-node
     restart: on-failure
-    environment:
-      POCKET_NODE_PLUGIN_ETH: ${POCKET_NODE_PLUGIN_ETH}
-      POCKET_NODE_PLUGIN_ETH_TEST_NETWORK_ID: ${POCKET_NODE_PLUGIN_ETH_TEST_NETWORK_ID}
-      POCKET_NODE_PLUGIN_ETH_TESTNET_NODE: ${POCKET_NODE_PLUGIN_ETH_TESTNET_NODE}
-      POCKET_NODE_PLUGIN_ETH_MAIN_NETWORK_ID: ${POCKET_NODE_PLUGIN_ETH_MAIN_NETWORK_ID} 
-      POCKET_NODE_PLUGIN_ETH_MAIN_NODE: ${POCKET_NODE_PLUGIN_ETH_MAIN_NODE}
 
             
