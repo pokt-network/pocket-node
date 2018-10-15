@@ -1,3 +1,4 @@
+# Note: This is a multi network setup, connecting the Pocket Node both to Rinkeby and Mainnet
 version: '2'
 
 volumes:
@@ -31,9 +32,9 @@ services:
       GETH_BOOTNODE_URL: ${GETH_BOOTNODE_URL} 
 
   pocket-node:
-    build: ../../.
-    image: poktnetwork/pocket-node
-    container_name: pocket-node
+    build: .
+    image: poktnetwork/pocket-node:geth
+    container_name: pocket-node-geth
     restart: on-failure
     expose:
       - 8000
