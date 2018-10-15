@@ -6,7 +6,8 @@ const Koa = require('koa'),
       QueriesController = require('./controllers/queries'),
       TransactionsController = require('./controllers/transactions'),
       PocketNodeLogger = require('./pocket-node-logger'),
-      http = require('http');
+      http = require('http'),
+      cors = require('@koa/cors');;
 
 // Request middlewares
 const injectPocketNodeServer = function(server) {
@@ -22,7 +23,7 @@ const logPocketNodeRequest = async function(ctx, next) {
 
 class PocketNodeServer {
 
-  constructor(port, logFilePath) {
+  constructor(port, logFilePath, enableCors) {
     // Load web server
     this.port = port;
     this.logFilePath = logFilePath;
@@ -30,6 +31,9 @@ class PocketNodeServer {
     this.webServer = new Koa();
     this.webRouter = new Router();
     this.webServer.use(KoaBody());
+    if(enableCors === true) {
+      this.webServer.use(cors());
+    }
   }
 
   start(callback) {

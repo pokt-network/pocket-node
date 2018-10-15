@@ -11,6 +11,7 @@ module.exports = function(program) {
     .description('Starts the Pocket Node API Server')
     .option('-p, --port [number]', 'Specify port [3000]', '3000')
     .option('-o, --output [filepath]', 'Specify log file path [pocket-node.log]', 'pocket-node.log')
+    .option('-c, --cors', 'Enable CORS requests')
     .action(function (cmd) {
       if (cluster.isMaster) {
         logger.info(`Pocket Node Server started with PID: ${process.pid} on port: ${cmd.port}`);
@@ -23,7 +24,7 @@ module.exports = function(program) {
           logger.info(`Started new Pocket Node Worker with PID: ${newWorker.process.pid}`);
         });
       } else {
-        var workerServer = new PocketNodeServer(cmd.port, cmd.output);
+        var workerServer = new PocketNodeServer(cmd.port, cmd.output, cmd.cors);
         workerServer.start(function() {
           logger.info(`Started new Pocket Node Worker with PID: ${process.pid}`);
         });
