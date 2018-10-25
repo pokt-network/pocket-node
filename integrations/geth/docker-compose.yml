@@ -2,7 +2,8 @@
 version: '2'
 
 volumes:
-  geth_rinkeby: {}
+  geth-rinkeby: {}
+  geth-mainnet: {}
 
 # GETH should be configurable via ENV variables
 services:
@@ -11,12 +12,10 @@ services:
     expose:
       - "8545"
       - "8546"
-    volumes:    
-      - geth_rinkeby:/.rinkeby
-    environment:
-      GETH_ALLOW_EXTERNAL_DOMAIN: "0.0.0.0"
-      GETH_ENVIRONMENT: ${GETH_ENVIRONMENT} # SUPPORTED [prod, test]
-      GETH_BOOTNODE_URL: ${GETH_BOOTNODE_URL} 
+      - "30303"
+    volumes:
+      - geth-rinkeby:/.rinkeby
+    command: "--rinkeby --rpc --rpcapi eth,net --rpcaddr 0.0.0.0 --rpcport 8545 --rpcvhosts=* --syncmode fast --datadir .testnet --verbosity 3"
 
 
   geth-mainnet:
@@ -24,12 +23,10 @@ services:
     expose:
       - "8545"
       - "8546"
-    volumes:    
-      - geth_rinkeby:/.rinkeby
-    environment:
-      GETH_ALLOW_EXTERNAL_DOMAIN: "0.0.0.0"
-      GETH_ENVIRONMENT: ${GETH_ENVIRONMENT} # SUPPORTED [prod, test]
-      GETH_BOOTNODE_URL: ${GETH_BOOTNODE_URL} 
+      - "30303"
+    volumes:
+      - geth-mainnet:/.mainnet
+    command: "--rpc  --rpcapi eth,net --rpcaddr 0.0.0.0 --rpcport 8545 --rpcvhosts=* --syncmode fast --datadir .mainnet --verbosity 3" 
 
   pocket-node:
     build: .
