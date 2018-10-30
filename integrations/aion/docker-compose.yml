@@ -1,0 +1,17 @@
+# Note: This is a multi network setup, connecting the Pocket Node both to Rinkeby and Mainnet
+version: '2'
+
+services:
+  pocket-node:
+    build: .
+    image: poktnetwork/pocket-node:aion
+    container_name: pocket-node-aion
+    restart: on-failure
+    expose:
+      - 8000
+    environment:
+      POCKET_NODE_PLUGIN_AION: ${POCKET_NODE_PLUGIN_AION}
+      POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID} # defaults to 2
+      POCKET_NODE_PLUGIN_AION_TESTNET_NODE: ${POCKET_NODE_PLUGIN_AION_TESTNET_NODE} # defaults to http://aion-rinkeby:8545 
+      POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID} # default  to 1
+      POCKET_NODE_PLUGIN_AION_MAIN_NODE: ${POCKET_NODE_PLUGIN_AION_MAINNET_NODE} # defaults to http://aion-mainnet:8545
