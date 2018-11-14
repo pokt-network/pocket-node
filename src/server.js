@@ -58,7 +58,7 @@ class PocketNodeServer {
 
   setupControllers() {
     // Setup the /node route
-    this.webRouter.get('/node', NodeController.index);
+    this.webRouter.get('/health', NodeController.health);
 
     // Setup the /queries route
     this.webRouter.post('/queries', QueriesController.submit);

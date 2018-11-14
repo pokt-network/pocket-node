@@ -1,10 +1,10 @@
 var PluginManager = require('../plugin-manager'),
     packageData = require('../../package.json');
 
-module.exports.index = async function(ctx, next) {
+module.exports.health = async function(ctx, next) {
   ctx.body = {
     version: packageData.version,
-    networks: await PluginManager.getSupportedNetworks()
+    networks: await PluginManager.getNetworks()
   };
   await next();
 };

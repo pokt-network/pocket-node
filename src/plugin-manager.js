@@ -103,3 +103,22 @@ module.exports.getSupportedNetworks = async function() {
 module.exports.isNetworkSupported = async function(network) {
   return Object.keys(await fileManager.getConfigFile()).includes(network.toUpperCase());
 }
+
+module.exports.getNetworks = async function() {
+  var result = [];
+  const configFile = await fileManager.getConfigFile();
+  const configFileEntries = Object.entries(configFile);
+  for (let i = 0; i < configFileEntries.length; i++) {
+    const networkEntry = configFileEntries[i];
+    const networkID = networkEntry[0];
+    const networkConfig = networkEntry[1];
+    const network = {
+      network: networkID,
+      version: networkConfig.version,
+      package_name: networkConfig.package_name,
+      subnetworks: Object.keys(networkConfig.configuration)
+    }
+    result.push(network);
+  }
+  return result;
+}
