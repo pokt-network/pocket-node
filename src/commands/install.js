@@ -3,15 +3,20 @@ var pluginManager = require('../plugin-manager'),
 
 module.exports = function(program) {
   program
-    .command('install <plugin>')
-    .description('Installs the specified Pocket Node Plugin from NPM')
-    .action(function (plugin, cmd) {
-      var logger = PocketNodeLogger.createCommandLogger();
-      logger.info('Installing: ' + plugin);
-      pluginManager.registerPlugin(plugin, function(err) {
-        if (err) {
-          logger.error(err);
+    .command('install [plugins...]')
+    .description('Installs the specified Pocket Node Plugins from NPM')
+    .action(async function (plugins) {
+      if(plugins && plugins.length > 0) {
+        var logger = PocketNodeLogger.createCommandLogger();
+        for (let i = 0; i < plugins.length; i++) {
+          const plugin = plugins[i];
+          logger.info('Installing: ' + plugin);
+          try {
+            await pluginManager.registerPlugin(plugin);   
+          } catch(error) {
+            logger.error(error);
+          }
         }
-      });
+      }
     });
 }
