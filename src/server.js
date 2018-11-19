@@ -7,7 +7,12 @@ const Koa = require('koa'),
       TransactionsController = require('./controllers/transactions'),
       PocketNodeLogger = require('./pocket-node-logger'),
       http = require('http'),
-      cors = require('@koa/cors');;
+      cors = require('@koa/cors'),
+      KoaWebSocket = require('koa-websocket'),
+      WebSocketDispatcher = require('./dispatchers/web-socket-dispatcher'),
+      WSNodeController = require('./controllers/node-ws'),
+      WSQueriesController = require('./controllers/queries-ws'),
+      WSTransactionsController = require('./controllers/transactions-ws');
 
 // Request middlewares
 const injectPocketNodeServer = function(server) {
@@ -21,50 +26,71 @@ const logPocketNodeRequest = async function(ctx, next) {
   next();
 }
 
+// Literal constants
+HEALTH_ROUTE = '/health';
+QUERIES_ROUTE = '/queries';
+TRANSACTIONS_ROUTE = '/transactions';
+
 class PocketNodeServer {
 
-  constructor(port, logFilePath, enableCors) {
-    // Load web server
+  constructor(port, logFilePath, enableCors, enableWS, enableHTTP) {
+    this.enableCors = enableCors;
+    this.enableWS = enableWS;
+    this.enableHTTP = enableHTTP;
     this.port = port;
     this.logFilePath = logFilePath;
     this.logger = PocketNodeLogger.createServerLogger(logFilePath);
-    this.webServer = new Koa();
-    this.webRouter = new Router();
-    this.webServer.use(KoaBody());
-    if(enableCors === true) {
-      this.webServer.use(cors());
-    }
+    this.webServer = KoaWebSocket(new Koa());
+    this.configureHTTP();
+    this.configureWS();
   }
 
-  start(callback) {
-    // Server reference
-    var server = this;
+  configureHTTP() {
+    if(this.enableHTTP !== true) {
+      return;
+    }
 
-    // Configure routes and allowed methods for those routers
+    this.webRouter = new Router();
+    this.webServer.use(KoaBody());
+    if (this.enableCors === true) {
+      this.webServer.use(cors());
+    }
     this.webServer.use(injectPocketNodeServer(this));
-    this.setupControllers();
+    this.webRouter.get(HEALTH_ROUTE, NodeController.health);
+    this.webRouter.post(QUERIES_ROUTE, QueriesController.submit);
+    this.webRouter.post(TRANSACTIONS_ROUTE, TransactionsController.submit);
     this.webServer.use(this.webRouter.routes());
     this.webServer.use(this.webRouter.allowedMethods());
     this.webServer.use(logPocketNodeRequest);
-
-    // Start the webserver
-    this.httpServer = http.createServer(this.webServer.callback())
-                          .listen(this.port, function(){
-      if (callback) {
-        callback();
-      }
-    });
+    this.httpServer = http.createServer(this.webServer.callback());
   }
 
-  setupControllers() {
-    // Setup the /node route
-    this.webRouter.get('/health', NodeController.health);
+  configureWS() {
+    if(this.enableWS !== true) {
+      return;
+    }
 
-    // Setup the /queries route
-    this.webRouter.post('/queries', QueriesController.submit);
+    // Create websocket dispatcher
+    this.websocketDispatcher = new WebSocketDispatcher(this.getWebSocketRouteMappings(), this.logger);
 
-    // Setup the /transactions route
-    this.webRouter.post('/transactions', TransactionsController.submit);
+    // Inject server instance
+    this.webServer.ws.use(injectPocketNodeServer(this));
+
+    // Add websocket dispatcher middleware
+    this.webServer.ws.use(this.websocketDispatcher.middleware);
+  }
+
+  getWebSocketRouteMappings() {
+    var mappings = {}
+    mappings[HEALTH_ROUTE] = WSNodeController.health;
+    mappings[QUERIES_ROUTE] = WSQueriesController.executeQuery;
+    mappings[TRANSACTIONS_ROUTE] = WSTransactionsController.sendTransaction;
+    return mappings;
+  }
+
+  start(callback) {
+    this.webServer.listen(this.port);
+    callback();
   }
 
   close() {
