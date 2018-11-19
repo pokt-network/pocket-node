@@ -12,7 +12,14 @@ module.exports = function(program) {
     .option('-p, --port [number]', 'Specify port [3000]', '3000')
     .option('-o, --output [filepath]', 'Specify log file path [pocket-node.log]', 'pocket-node.log')
     .option('-c, --cors', 'Enable CORS requests')
+    .option('-w, --ws', 'Enable WebSocket requests')
+    .option('-h, --http', 'Enable HTTP endpoints')
     .action(function (cmd) {
+      if(cmd.ws !== true && cmd.http !== true) {
+        logger.error('You need to enable either Websockets or HTTP, use --help to see how to enable them.');
+        return;
+      }
+
       if (cluster.isMaster) {
         logger.info(`Pocket Node Server started with PID: ${process.pid} on port: ${cmd.port}`);
         for (let i = 0; i < numCPUs; i++) {
@@ -24,7 +31,7 @@ module.exports = function(program) {
           logger.info(`Started new Pocket Node Worker with PID: ${newWorker.process.pid}`);
         });
       } else {
-        var workerServer = new PocketNodeServer(cmd.port, cmd.output, cmd.cors);
+        var workerServer = new PocketNodeServer(cmd.port, cmd.output, cmd.cors, cmd.ws, cmd.http);
         workerServer.start(function() {
           logger.info(`Started new Pocket Node Worker with PID: ${process.pid}`);
         });

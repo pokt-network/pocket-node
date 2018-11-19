@@ -21,6 +21,7 @@
     "koa": "^2.5.0",
     "koa-body": "^2.5.0",
     "koa-router": "^7.4.0",
+    "koa-websocket": "^5.0.1",
     "npm-programmatic": "0.0.10",
     "winston": "^3.0.0-rc6",
     "winston-daily-rotate-file": "^3.2.1"
