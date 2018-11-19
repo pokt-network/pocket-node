@@ -40,7 +40,12 @@ class ConfigFileManager {
     try {
       // Ensure the file exists
       await fs.ensureFile(this.configFilePath);
-      this.configFile = await fs.readJson(this.configFilePath, {throws: true});
+      this.configFile = await fs.readJson(this.configFilePath, {throws: false});
+      if(this.configFile === null) {
+        this.configFile = {};
+        // creates an empty json file
+        await fs.outputJson(this.configFilePath, this.configFile);
+      }
     } catch (err) {
       console.log('Error reloading config file: ' + this.configFilePath);
       console.error(err);
