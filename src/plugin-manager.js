@@ -36,7 +36,7 @@ module.exports.registerPlugin = async function(packageName) {
   var plugin = require(packageName),
       pluginDefinition = plugin.getPluginDefinition();
   pluginDefinition['configuration'] = {};
-  fileManager.updateProperty(pluginDefinition.network, pluginDefinition);
+  await fileManager.updateProperty(pluginDefinition.network, pluginDefinition);
   console.log(packageName + ' plugin installed succesfully');
 }
 

@@ -62,7 +62,6 @@ class PocketNodeServer {
     this.webServer.use(this.webRouter.routes());
     this.webServer.use(this.webRouter.allowedMethods());
     this.webServer.use(logPocketNodeRequest);
-    this.httpServer = http.createServer(this.webServer.callback());
   }
 
   configureWS() {
@@ -94,9 +93,7 @@ class PocketNodeServer {
   }
 
   close() {
-    if (this.httpServer) {
-      this.httpServer.close();
-    }
+    this.webServer.server.close();
   }
 }
 
