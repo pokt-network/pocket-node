@@ -1,7 +1,5 @@
 var assert = require('assert'),
     PocketNodeServer = require('../src/server'),
-    request = require('supertest'),
-    packageData = require('../package.json'),
     appRootPath = require('app-root-path').toString(),
     path = require('path'),
     PluginManager = require('../src/plugin-manager'),
