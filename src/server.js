@@ -6,7 +6,6 @@ const Koa = require('koa'),
       QueriesController = require('./controllers/queries'),
       TransactionsController = require('./controllers/transactions'),
       PocketNodeLogger = require('./pocket-node-logger'),
-      http = require('http'),
       cors = require('@koa/cors'),
       KoaWebSocket = require('koa-websocket'),
       WebSocketDispatcher = require('./dispatchers/web-socket-dispatcher'),
@@ -57,8 +56,8 @@ class PocketNodeServer {
     }
     this.webServer.use(injectPocketNodeServer(this));
     this.webRouter.get(HEALTH_ROUTE, NodeController.health);
-    this.webRouter.post(QUERIES_ROUTE, QueriesController.submit);
-    this.webRouter.post(TRANSACTIONS_ROUTE, TransactionsController.submit);
+    this.webRouter.post(QUERIES_ROUTE, QueriesController.executeQuery);
+    this.webRouter.post(TRANSACTIONS_ROUTE, TransactionsController.sendTransaction);
     this.webServer.use(this.webRouter.routes());
     this.webServer.use(this.webRouter.allowedMethods());
     this.webServer.use(logPocketNodeRequest);
