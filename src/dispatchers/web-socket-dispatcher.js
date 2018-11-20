@@ -9,13 +9,17 @@ class WebsocketMessage {
             throw new Error('Invalid raw message');
         }
 
-        if (typeof this.rawMessage !== 'object' || Object.keys(this.rawMessage).length === 0) {
+        if((typeof this.rawMessage !== 'object' || 
+           Object.keys(this.rawMessage).length === 0 ||
+           !this.rawMessage.hasOwnProperty('id')) ||
+           !(typeof this.rawMessage.id === 'number' || typeof this.rawMessage.id === 'string')) {
             throw new Error('Invalid raw message');
         }
 
         // Assigns message properties
         this.url = this.rawMessage.url;
         this.payload = this.rawMessage.payload;
+        this.id = this.rawMessage.id;
     }
 }
 
@@ -26,11 +30,12 @@ class WebSocketDispatcher {
     }
 
     // Sends an error message over the websocket and logs it
-    static sendErrorMessage(websocket, logger, errorMsg) {
+    static sendErrorMessage(websocket, origMessage, logger, errorMsg) {
         // Craft error message
         const response = {
             error: true,
-            error_msg: errorMsg
+            error_msg: errorMsg,
+            request: origMessage
         };
         // Send error message
         websocket.send(JSON.stringify(response));
@@ -75,13 +80,13 @@ class WebSocketDispatcher {
             try {
                 wsMessage = new WebsocketMessage(message);
             } catch (error) {
-                WebSocketDispatcher.sendErrorMessage(websocket, logger, error.message);
+                WebSocketDispatcher.sendErrorMessage(websocket, message, logger, error.message);
                 return;
             }
 
             // Send error message if websocketDispatcher instance is invalid
             if (websocketDispatcher === null) {
-                WebSocketDispatcher.sendErrorMessage(websocket, logger, 'Unable to find matching URL dispatcher for message');
+                WebSocketDispatcher.sendErrorMessage(websocket, message, logger, 'Unable to find matching URL dispatcher for message');
                 return;
             }
 
@@ -90,7 +95,7 @@ class WebSocketDispatcher {
 
             // Check if there's a controller for the given route
             if (routeController === null) {
-                WebSocketDispatcher.sendErrorMessage(websocket, logger, 'Invalid route');
+                WebSocketDispatcher.sendErrorMessage(websocket, message, logger, 'Invalid route');
                 return;
             }
 
@@ -98,9 +103,13 @@ class WebSocketDispatcher {
             try {
                 const response = await routeController(wsMessage, logger);
                 // Emit response message
-                websocket.send(JSON.stringify(response));
+                websocket.send(JSON.stringify({
+                    id: wsMessage.id,
+                    url: wsMessage.url,
+                    payload: response
+                }));
             } catch(error) {
-                WebSocketDispatcher.sendErrorMessage(websocket, logger, error.message);
+                WebSocketDispatcher.sendErrorMessage(websocket, message, logger, error.message);
                 return;
             }
         }
