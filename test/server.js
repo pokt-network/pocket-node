@@ -71,14 +71,14 @@ describe('Pocket Node Server', function() {
         });
     });
 
-    it('should respond with 500 if the plugin is not found', function() {
+    it('should respond with 400 if the plugin is not found', function() {
       return request(pocketNodeServer.webServer.server)
         .post('/transactions')
         .send({network: "BOGUS", serialized_tx: null, tx_metadata: {}})
         .set('Accept', 'application/json')
-        .expect(500)
+        .expect(400)
         .then(response => {
-          assert(response.status, 500);
+          assert(response.status, 400);
         });
     });
   });
@@ -87,7 +87,7 @@ describe('Pocket Node Server', function() {
     it('should execute a valid query', function() {
       return request(pocketNodeServer.webServer.server)
         .post('/queries')
-        .send({network: "TEST", subnetwork: '5777', serialized_tx: "0x000", tx_metadata: {}})
+        .send({network: "TEST", subnetwork: '5777', query: {}, decoder: {}})
         .set('Accept', 'application/json')
         .expect(200)
         .then(response => {
@@ -108,14 +108,14 @@ describe('Pocket Node Server', function() {
         });
     });
 
-    it('should respond with 500 if the plugin is not found', function() {
+    it('should respond with 400 if the plugin is not found', function() {
       return request(pocketNodeServer.webServer.server)
         .post('/queries')
-        .send({network: "BOGUS", serialized_tx: null, tx_metadata: {}})
+        .send({network: "BOGUS", query: {}, decoder: {}})
         .set('Accept', 'application/json')
-        .expect(500)
+        .expect(400)
         .then(response => {
-          assert(response.status, 500);
+          assert(response.status, 400);
         });
     });
   });
