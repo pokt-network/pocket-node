@@ -12,7 +12,7 @@ describe('Pocket Node Server', function() {
   const POCKET_NODE_SERVER_PORT = 8000;
 
   before(function(done) {
-    pocketNodeServer = new PocketNodeServer(POCKET_NODE_SERVER_PORT, null);
+    pocketNodeServer = new PocketNodeServer(POCKET_NODE_SERVER_PORT, null, false, false, true);
     pocketNodeServer.start(async function() {
       await PluginManager.registerPlugin(path.join(appRootPath) + '/test/test_plugin');
       await PluginManager.configurePlugin('TEST', {'5777': {test_config_1: "test value"}});
@@ -26,25 +26,25 @@ describe('Pocket Node Server', function() {
   });
 
   it('should listen', function() {
-    assert.equal(pocketNodeServer.httpServer.listening, true);
+    assert.equal(pocketNodeServer.webServer.server.listening, true);
   });
 
-  describe('GET /node', function() {
+  describe('GET /health', function() {
     it('should return the node information', function() {
-      return request(pocketNodeServer.httpServer)
-        .get('/node')
+      return request(pocketNodeServer.webServer.server)
+        .get('/health')
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(200)
         .then(response => {
-          assert(response.body, {version: packageData.version, networks: []});
+          assert(response.body, {"version":"0.0.11","networks":[{"network":"TEST","version":"0.0.1","package_name":"test-plugin","subnetworks":["5777"]}]});
         });
     });
   });
 
   describe('POST /transactions', function() {
     it('should submit a valid transaction', function() {
-      return request(pocketNodeServer.httpServer)
+      return request(pocketNodeServer.webServer.server)
         .post('/transactions')
         .send({network: "TEST", subnetwork: '5777', serialized_tx: "0x000", tx_metadata: {}})
         .set('Accept', 'application/json')
@@ -72,7 +72,7 @@ describe('Pocket Node Server', function() {
     });
 
     it('should respond with 500 if the plugin is not found', function() {
-      return request(pocketNodeServer.httpServer)
+      return request(pocketNodeServer.webServer.server)
         .post('/transactions')
         .send({network: "BOGUS", serialized_tx: null, tx_metadata: {}})
         .set('Accept', 'application/json')
@@ -85,7 +85,7 @@ describe('Pocket Node Server', function() {
 
   describe('POST /queries', function() {
     it('should execute a valid query', function() {
-      return request(pocketNodeServer.httpServer)
+      return request(pocketNodeServer.webServer.server)
         .post('/queries')
         .send({network: "TEST", subnetwork: '5777', serialized_tx: "0x000", tx_metadata: {}})
         .set('Accept', 'application/json')
@@ -109,7 +109,7 @@ describe('Pocket Node Server', function() {
     });
 
     it('should respond with 500 if the plugin is not found', function() {
-      return request(pocketNodeServer.httpServer)
+      return request(pocketNodeServer.webServer.server)
         .post('/queries')
         .send({network: "BOGUS", serialized_tx: null, tx_metadata: {}})
         .set('Accept', 'application/json')
