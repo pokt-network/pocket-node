@@ -59,3 +59,6 @@ typings/
 
 # Pocket Node configuration folder
 configuration/
+
+# Documentation output
+documentation/*.html
