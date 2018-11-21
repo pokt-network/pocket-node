@@ -1,6 +1,6 @@
 {
   "name": "pocket-node",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A Pocket Network client for Pocket Nodes, which are the actors within the Pocket Network that execute the Relays.",
   "main": "src/pocket-node.js",
   "repository": "https://github.com/pokt-network/pocket-node",
