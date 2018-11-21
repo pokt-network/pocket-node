@@ -1,0 +1,95 @@
+FORMAT: 1A
+
+# Pocket Node REST API Endpoint
+This is the blueprint for the Pocket Node REST API Endpoint.
+
+# Group Health
+Represents the Node information and configuration, including what networks it supports.
+
+# Health [/health]
+
+## Retrieve Node Health Information [GET]
+
++ Response 200 (text/json)
+
+        {
+            "version": "0.0.1",
+            "networks": [
+                {
+                    network: "ETH",
+                    version: "0.0.6",
+                    package_name: "pnp-eth",
+                    subnetworks: ["5777"]
+                }
+            ]
+        }
+
+# Group Queries
+A query is a transaction to read data from the specified network. The `query` object will be described per network plugin,
+see `/health` to determine which plugin a given Pocket Node is using to service requests for a given network (e.g. ETH).
+The `result` attribute in the response can be either an `Object`, an `Array`, a `String` or a `Number`.
+
+# Queries [/queries]
+
+## Submit a Query [POST]
+
++ Request  (text/json)
+
+        {
+            "network": "ETH",
+            "subnetwork": "4",
+            "query": {
+                "rpc_method": "eth_getBalance",
+                "rpc_params": ["0x0", "latest"]
+            },
+            "decoder": {}
+        }
+
++ Response 200 (text/json)
+
+        {
+            "network": "ETH",
+            "subnetwork": "4",
+            "query": {
+                "rpc_method": "eth_getBalance",
+                "rpc_params": ["0x0", "latest"]
+            },
+            "decoder": {},
+            "result": "{Object containing result}|[Array containing multiple results]|'String value'|Numeric Value",
+            "decoded": false,
+            "error": false,
+            "error_msg": null
+        }
+
+# Group Transactions
+A transaction is an operation that alters the state of the network. Most networks accept signed transactions
+coded as hex strings, and these should be the input of the `serialized_tx` field. The `tx_metadata` is for 
+networks that required different data structures to represent a transaction. No Pocket Node is going to sign a transaction,
+signatures must happen client-side. See the `/health` endpoint to determine which plugin a given Pocket Node is using to service 
+requests for a given network (e.g. ETH).
+
+# Transactions [/transactions]
+
+## Submit a Transaction [POST]
+
++ Request  (text/json)
+
+        {
+            "network": "ETH",
+            "subnetwork": "4",
+            "serialized_tx": "0x0",
+            "tx_metadata": {}
+        }
+
++ Response 200 (text/json)
+
+        {
+            "network": "ETH",
+            "subnetwork": "4",
+            "serialized_tx": "0x0",
+            "tx_metadata": {},
+            "hash": "0x000",
+            "metadata": {},
+            "error": false,
+            "error_msg": null
+        }
