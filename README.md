@@ -11,9 +11,9 @@ You can install using `npm`:
 ## Running the server
 To start the server, just run:
 
-`pocket-node start -p [port number]`
+`pocket-node start -p [port number] -h -w`
 
-But before you can start relaying transactions, read below on how to install the different plugins which will allow your Node to connect to the different blockchains (ETH, BTC, LTC, etc.).
+The `-h` and `-w` flags are to enable the HTTP and WebSocket endpoints respectively. Before you can start relaying transactions, read below on how to install the different plugins which will allow your Node to connect to the different blockchains (ETH, BTC, LTC, etc.).
 
 ## Using Docker
 
