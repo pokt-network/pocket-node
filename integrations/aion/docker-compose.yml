@@ -1,7 +1,39 @@
-# Note: This is a multi network setup, connecting the Pocket Node both to Rinkeby and Mainnet
+# Note: This is a multi network setup, connecting the Pocket Node both to Testnet and Mainnet
 version: '2'
 
+volumes:
+  aion-mainnet: {}
+  aion-testnet: {}
+
+
 services:
+  aion-mainnet:
+    image: sh39sxn/aion-kernel 
+    expose:
+      - "8545"
+      - "8547"
+      - "30303"
+    volumes:
+      - aion-mainnet:/.mainnet
+    environment:
+      java_api_listen_address: "0.0.0.0"
+      rpc_listen_address: "0.0.0.0"
+      AION_NETWORK: "mainnet"
+
+  aion-testnet:
+    image: sh39sxn/aion-kernel 
+    expose:
+      - "8545"
+      - "8547"
+      - "30303"
+    volumes:
+      - aion-testnet:/.mainnet
+    environment:
+      java_api_listen_address: "0.0.0.0"
+      rpc_listen_address: "0.0.0.0"
+      AION_NETWORK: "testnet"
+
+
   pocket-node:
     build: .
     image: poktnetwork/pocket-node:aion
