@@ -3,7 +3,7 @@ version: '2'
 
 volumes:
   aion-mainnet: {}
-  aion-testnet: {}
+  aion-mastery: {}
 
 
 services:
@@ -20,14 +20,14 @@ services:
       rpc_listen_address: "0.0.0.0"
       AION_NETWORK: "mainnet"
 
-  aion-testnet:
+  aion-mastery:
     image: sh39sxn/aion-kernel 
     expose:
       - "8545"
       - "8547"
       - "30303"
     volumes:
-      - aion-testnet:/.mainnet
+      - aion-mastery:/.mainnet
     environment:
       java_api_listen_address: "0.0.0.0"
       rpc_listen_address: "0.0.0.0"
@@ -44,6 +44,6 @@ services:
     environment:
       POCKET_NODE_PLUGIN_AION: ${POCKET_NODE_PLUGIN_AION}
       POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID} # defaults to 2
-      POCKET_NODE_PLUGIN_AION_TESTNET_NODE: ${POCKET_NODE_PLUGIN_AION_TESTNET_NODE} # defaults to http://aion-rinkeby:8545 
+      POCKET_NODE_PLUGIN_AION_TESTNET_NODE: ${POCKET_NODE_PLUGIN_AION_TESTNET_NODE} # defaults to http://aion-mastery:8545 
       POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID} # default  to 1
       POCKET_NODE_PLUGIN_AION_MAIN_NODE: ${POCKET_NODE_PLUGIN_AION_MAINNET_NODE} # defaults to http://aion-mainnet:8545
