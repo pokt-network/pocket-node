@@ -16,7 +16,7 @@ if [ "${POCKET_NODE_PLUGIN_AION:-enabled}" = "enabled" ]; then
   },
   "${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID:-2}": {
     "aion_node": "${POCKET_NODE_PLUGIN_AION_TESTNET_NODE:-http://aion-testnet:8545}",
-    "network_id": "${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID:-4}"
+    "network_id": "${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID:-2}"
   }
 
 }
