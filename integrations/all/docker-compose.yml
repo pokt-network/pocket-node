@@ -1,0 +1,78 @@
+# Note: This is a multi network setup, connecting the Pocket Node both to Testnet and Mainnet
+version: '2'
+
+volumes:
+  aion-mainnet: {}
+  aion-mastery: {}
+  geth-rinkeby: {}
+  geth-mainnet: {}
+
+services:
+  geth-rinkeby:
+    image: poktnetwork/geth:rinkeby
+    expose:
+      - "8545"
+      - "8546"
+      - "30303"
+    volumes:
+      - geth-rinkeby:/.rinkeby
+    command: "--rinkeby --rpc --rpcapi eth,net --rpcaddr 0.0.0.0 --rpcport 8545 --rpcvhosts=* --syncmode fast --datadir .testnet --verbosity 3"
+
+
+  geth-mainnet:
+    image: poktnetwork/geth:mainnet
+    expose:
+      - "8545"
+      - "8546"
+      - "30303"
+    volumes:
+      - geth-mainnet:/.mainnet
+    command: "--rpc  --rpcapi eth,net --rpcaddr 0.0.0.0 --rpcport 8545 --rpcvhosts=* --syncmode fast --datadir .mainnet --verbosity 3" 
+
+  aion-mainnet:
+    image: sh39sxn/aion-kernel 
+    expose:
+      - "8545"
+      - "8547"
+      - "30303"
+    volumes:
+      - aion-mainnet:/.mainnet
+    environment:
+      java_api_listen_address: "0.0.0.0"
+      rpc_listen_address: "0.0.0.0"
+      AION_NETWORK: "mainnet"
+
+  aion-mastery:
+    image: sh39sxn/aion-kernel 
+    expose:
+      - "8545"
+      - "8547"
+      - "30303"
+    volumes:
+      - aion-mastery:/.mainnet
+    environment:
+      java_api_listen_address: "0.0.0.0"
+      rpc_listen_address: "0.0.0.0"
+      AION_NETWORK: "mastery"
+
+  pocket-node:
+    build: .
+    image: poktnetwork/pocket-node:all
+    restart: on-failure
+    expose:
+      - 8000
+    environment:
+      # AION configuration
+      POCKET_NODE_PLUGIN_AION: ${POCKET_NODE_PLUGIN_AION}
+      POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID} # defaults to 2
+      POCKET_NODE_PLUGIN_AION_TESTNET_NODE: ${POCKET_NODE_PLUGIN_AION_TESTNET_NODE} # defaults to http://aion-mastery:8545 
+      POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID} # default  to 1
+      POCKET_NODE_PLUGIN_AION_MAIN_NODE: ${POCKET_NODE_PLUGIN_AION_MAINNET_NODE} # defaults to http://aion-mainnet:8545
+      # GETH configuration
+      POCKET_NODE_PLUGIN_ETH: ${POCKET_NODE_PLUGIN_ETH}
+      POCKET_NODE_PLUGIN_ETH_TEST_NETWORK_ID: ${POCKET_NODE_PLUGIN_ETH_TEST_NETWORK_ID} # defaults to 4
+      POCKET_NODE_PLUGIN_ETH_TESTNET_NODE: ${POCKET_NODE_PLUGIN_ETH_TESTNET_NODE} # defaults to http://geth-rinkeby:8545 
+      POCKET_NODE_PLUGIN_ETH_MAIN_NETWORK_ID: ${POCKET_NODE_PLUGIN_ETH_MAIN_NETWORK_ID} # default  to 1
+      POCKET_NODE_PLUGIN_ETH_MAIN_NODE: ${POCKET_NODE_PLUGIN_ETH_MAINNET_NODE} # defaults to http://geth-mainnet:8545
+      POCKET_NODE_PLUGIN_AION: "enabled"
+      POCKET_NODE_PLUGIN_ETH: "enabled"
