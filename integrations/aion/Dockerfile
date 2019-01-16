@@ -12,4 +12,4 @@ COPY ./entrypoint.sh .
 
 ENTRYPOINT ["./entrypoint.sh"]
 
-CMD ["pocket-node", "start", "-h", "-w", "-p", "8000", "-o", "/dev/stdout", "-c"]
+CMD ["pocket-node", "start", "-p", "8000", "-h", "-w",  "-o", "/dev/stdout", "-c"]
