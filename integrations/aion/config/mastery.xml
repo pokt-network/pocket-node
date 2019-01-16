@@ -4,17 +4,20 @@
 	<id>[NODE-ID-PLACEHOLDER]</id>
 	<api>
 		<!-- rpc config docs: https://github.com/aionnetwork/aion/wiki/JSON-RPC-API-Docs -->
-        <rpc active="active" ip="0.0.0.0" port="8545">
-              <cors-enabled>true</cors-enabled>
-              <cors-origin>*</cors-origin>
-			<!--comma-separated list, APIs available: web3,net,debug,personal,eth,stratum-->
-            <apis-enabled>net,eth</apis-enabled>
+        <rpc active="true" ip="0.0.0.0" port="8545">
+
+		    <cors-enabled>true</cors-enabled>
+		    <cors-origin>*</cors-origin>
             <vendor>undertow</vendor>
 
-		</rpc>
-                <java active="active" ip="0.0.0.0" port="8547">
-                        <secure-connect>true</secure-connect>
-                </java>
+			<!--comma-separated list, APIs available: web3,net,debug,personal,eth,stratum-->
+            <apis-enabled>net,eth</apis-enabled>
+
+        </rpc>
+
+        <java active="true" ip="0.0.0.0" port="8547">
+            <secure-connect>true</secure-connect>
+        </java>
 
 		<nrg-recommendation>
 			<!--default NRG price used by api if oracle disabled, minimum price recommended by oracle-->
