@@ -48,8 +48,8 @@ services:
     image: poktnetwork/pocket-node:aion
     container_name: pocket-node-aion
     restart: on-failure
-    expose:
-      - 8000
+    ports:
+      - "3000:3000"
     environment:
       POCKET_NODE_PLUGIN_AION: ${POCKET_NODE_PLUGIN_AION}
       POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID} # defaults to 2

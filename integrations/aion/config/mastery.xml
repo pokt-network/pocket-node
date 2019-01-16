@@ -4,7 +4,6 @@
 	<id>[NODE-ID-PLACEHOLDER]</id>
 	<api>
 		<!-- rpc config docs: https://github.com/aionnetwork/aion/wiki/JSON-RPC-API-Docs -->
-<<<<<<< HEAD
         <rpc active="true" ip="0.0.0.0" port="8545">
 
 		    <cors-enabled>true</cors-enabled>
@@ -19,19 +18,6 @@
         <java active="true" ip="0.0.0.0" port="8547">
             <secure-connect>true</secure-connect>
         </java>
-=======
-        <rpc active="active" ip="0.0.0.0" port="8545">
-              <cors-enabled>true</cors-enabled>
-              <cors-origin>*</cors-origin>
-			<!--comma-separated list, APIs available: web3,net,debug,personal,eth,stratum-->
-            <apis-enabled>net,eth</apis-enabled>
-            <vendor>undertow</vendor>
-
-		</rpc>
-                <java active="active" ip="0.0.0.0" port="8547">
-                        <secure-connect>true</secure-connect>
-                </java>
->>>>>>> 83cef78... Using our own docker image of aion with custom configuration
 
 		<nrg-recommendation>
 			<!--default NRG price used by api if oracle disabled, minimum price recommended by oracle-->
@@ -43,13 +29,6 @@
 		</nrg-recommendation>
 	</api>
 	<net>
-<<<<<<< HEAD
-		<id>32</id>
-        <nodes>
-    		<node>p2p://a30d1000-8c7e-496c-9c4e-c89318280274@168.62.170.146:30303</node>
-    		<node>p2p://a30d2000-729a-4584-86f1-e19ab97cf9ce@23.96.22.19:30303</node>
-    		<node>p2p://a30d3000-216b-47d4-ac44-5d8181b56e7e@137.117.56.84:30303</node>
-=======
 		<id>256</id>
 		<nodes>
 			<node>p2p://c33d1066-8c7e-496c-9c4e-c89318280274@13.92.155.115:30303</node>
@@ -58,7 +37,6 @@
 			<node>p2p://c33d4c07-6a29-4ca6-8b06-b2781ba7f9bf@191.232.164.119:30303</node>
 			<node>p2p://c33d5a94-20d8-49d9-97d6-284f88da5c21@13.89.244.125:30303</node>
 			<node>p2p://741b979e-6a06-493a-a1f2-693cafd37083@66.207.217.190:30303</node>
->>>>>>> 83cef78... Using our own docker image of aion with custom configuration
 		</nodes>
 		<p2p>
 			<ip>0.0.0.0</ip>
