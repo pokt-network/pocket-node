@@ -3,56 +3,47 @@ version: '2'
 
 volumes:
   aion-mainnet: {}
-  aion-mastery: {}
+  aion-testnet: {}
 
 
 services:
   aion-mainnet:
-    image: poktnetwork/aion
-    build: 
-      context: .
-      dockerfile: Dockerfile.aion
-
+    image: sh39sxn/aion-kernel 
     expose:
       - "8545"
       - "8547"
       - "30303"
     volumes:
       - aion-mainnet:/.mainnet
-
     environment:
       java_api_listen_address: "0.0.0.0"
       rpc_listen_address: "0.0.0.0"
       AION_NETWORK: "mainnet"
 
-  aion-mastery:
-    image: poktnetwork/aion
-    build: 
-      context: .
-      dockerfile: Dockerfile.aion
-
+  aion-testnet:
+    image: sh39sxn/aion-kernel 
     expose:
       - "8545"
       - "8547"
       - "30303"
     volumes:
-      - aion-mastery:/.mainnet
-
+      - aion-testnet:/.mainnet
     environment:
       java_api_listen_address: "0.0.0.0"
       rpc_listen_address: "0.0.0.0"
-      AION_NETWORK: "mastery"
+      AION_NETWORK: "testnet"
+
 
   pocket-node:
     build: .
     image: poktnetwork/pocket-node:aion
     container_name: pocket-node-aion
     restart: on-failure
-    ports:
-      - "3000:3000"
+    expose:
+      - 8000
     environment:
       POCKET_NODE_PLUGIN_AION: ${POCKET_NODE_PLUGIN_AION}
       POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_TEST_NETWORK_ID} # defaults to 2
-      POCKET_NODE_PLUGIN_AION_TESTNET_NODE: ${POCKET_NODE_PLUGIN_AION_TESTNET_NODE} # defaults to http://aion-mastery:8545 
+      POCKET_NODE_PLUGIN_AION_TESTNET_NODE: ${POCKET_NODE_PLUGIN_AION_TESTNET_NODE} # defaults to http://aion-rinkeby:8545 
       POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID: ${POCKET_NODE_PLUGIN_AION_MAIN_NETWORK_ID} # default  to 1
-      POCKET_NODE_PLUGIN_AION_MAIN_NODE: ${POCKET_NODE_PLUGIN_AION_MAIN_NODE} # defaults to http://aion-mainnet:8545
+      POCKET_NODE_PLUGIN_AION_MAIN_NODE: ${POCKET_NODE_PLUGIN_AION_MAINNET_NODE} # defaults to http://aion-mainnet:8545
