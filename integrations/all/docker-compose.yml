@@ -30,7 +30,7 @@ services:
     command: "--rpc  --rpcapi eth,net --rpcaddr 0.0.0.0 --rpcport 8545 --rpcvhosts=* --syncmode fast --datadir .mainnet --verbosity 3" 
 
   aion-mainnet:
-    image: sh39sxn/aion-kernel 
+    image: poktnetwork/aion
     expose:
       - "8545"
       - "8547"
@@ -43,7 +43,7 @@ services:
       AION_NETWORK: "mainnet"
 
   aion-mastery:
-    image: sh39sxn/aion-kernel 
+    image: poktnetwork/aion
     expose:
       - "8545"
       - "8547"
@@ -59,8 +59,8 @@ services:
     build: .
     image: poktnetwork/pocket-node:all
     restart: on-failure
-    expose:
-      - 8000
+    ports:
+      - "3000:3000"
     environment:
       # AION configuration
       POCKET_NODE_PLUGIN_AION: 
