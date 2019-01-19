@@ -18,7 +18,8 @@ services:
       - "8547"
       - "30303"
     volumes:
-      - aion-mainnet:/.mainnet
+      - aion-mainnet:/opt/aion/mainnet/
+      - /var/log/aion:/opt/aion/mainnet/log/
 
     environment:
       java_api_listen_address: "0.0.0.0"
@@ -36,7 +37,8 @@ services:
       - "8547"
       - "30303"
     volumes:
-      - aion-mastery:/.mainnet
+      - aion-mastery:/opt/aion/mastery/
+      - /var/log/aion:/opt/aion/mastery/log/
 
     environment:
       java_api_listen_address: "0.0.0.0"
