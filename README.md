@@ -1,3 +1,6 @@
+# NOTE:
+This repository has been deprecated, please visit the [Pocket Core repository for the latest on Pocket development.](https://github.com/pokt-network/pocket-core)
+
 # pocket-node
 A Pocket Network client for Pocket Nodes, which are the actors within the Pocket Network that execute the Relays.
 
